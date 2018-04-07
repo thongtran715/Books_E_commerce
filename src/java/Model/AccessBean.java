@@ -11,4 +11,29 @@ package Model;
  */
 public class AccessBean {
     
+    
+    private String email;
+    private String password;
+    public AccessBean() {
+        super();
+    }
+    
+    
+    
+    public String getUserEmail () {
+        return email;
+    }
+    public void emailUserName(String email) {
+        this.email = email;
+    }
+    public boolean logInToDb(String password) {
+        // Call the db 
+        // QUerry the db 
+        return true;
+    }
+    public int getUserType () {
+        // Calling from db and return the type of the user
+        return 0;
+    }
+    
 }

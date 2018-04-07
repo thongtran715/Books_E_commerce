@@ -7,19 +7,20 @@ package Controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Model.*;
+import javax.servlet.RequestDispatcher;
 /**
  *
  * @author ThongTran
+ * 
  */
-@WebServlet(name = "RegisterController", urlPatterns = {"/RegisterController"})
-public class RegisterController extends HttpServlet {
+@WebServlet(name = "SaleController", urlPatterns = {"/SaleController"})
+public class SaleController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,28 +35,13 @@ public class RegisterController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String email = request.getParameter("email");
-            String password_first = request.getParameter("password_first");
-            String password_second = request.getParameter("password_second");
-            String name = request.getParameter("name");
-            /*
-            AccessBean reg = new AccessBean()
-                    
-            // if they have the same password
-            if (password_first.equals(password_second)) {
-                 reg.createUserWith (email, password_first, name);
-                 // Navigate to login views
-                 RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
-                 rd.forward(request, response);
-            }
-            else {
-                RequestDispatcher rd=request.getRequestDispatcher("register_error.jsp");  
-                rd.forward(request, response);
-            }
-            */
-            
-            
+             AccessBean logBean = (AccessBean)request.getAttribute("user_info");
+             // Need to have Sale Model to fetch all the sale 
+             
+             
+             
+             response.sendRedirect("View/sale.jsp");
+             
         }
     }
 

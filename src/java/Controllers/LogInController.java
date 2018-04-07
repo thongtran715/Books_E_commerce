@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.RequestDispatcher;  
+import Model.*;
 
 
 /**
@@ -37,21 +38,30 @@ public class LogInController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */     
-            String userName = request.getParameter("username");
+            String email = request.getParameter("email");
             String password = request.getParameter("password");
-            LoginBean log = new LoginBean();
-            log.setUserName(userName);
-            
+            AccessBean log = new AccessBean();
+            log.emailUserName(email);
+            RequestDispatcher rd = null;
             // It means we first check if the user successfully logged in the system
-            if (log.logInToDb(userName, password)) {
+            if (log.logInToDb(password)) {
                 // Save the session 
                 request.setAttribute("user_info", log);
                 // Navigate to different view 
-                 RequestDispatcher rd=request.getRequestDispatcher("inventory.jsp");  
-                 rd.forward(request, response);  
+                 if (log.getUserType() == 0 ) // It means the user is logged in is the normal user
+                 {
+                 rd=request.getRequestDispatcher("CartController");  
+                 }
+                 else if (log.getUserType() == 1){ // It means the user is logged in is the store manager
+                   rd=request.getRequestDispatcher("CartController");  
+                 }
+                 else {
+                     rd=request.getRequestDispatcher("AdminController");  
+                 }
+                 rd.forward(request, response);
             }
             else {
-                 RequestDispatcher rd=request.getRequestDispatcher("login-error.jsp");  
+                 rd=request.getRequestDispatcher("login_error.jsp");  
                  rd.forward(request, response);
             }
             

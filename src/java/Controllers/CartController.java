@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import Model.*;
 /**
  *
  * @author ThongTran
@@ -34,15 +34,24 @@ public class CartController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CartController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CartController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            AccessBean userBean = (AccessBean)request.getAttribute("user_info");
+            String user_email = userBean.getUserEmail();
+            
+            // Once getting the user name . We will call the cart to fetch all the 
+            
+            
+            
+            // seperate the type for the user
+            // Need to have cart view for normal user
+            if (userBean.getUserType() == 0) {
+            response.sendRedirect("View/cart.jsp");
+            }
+            else if (userBean.getUserType() == 1) {
+                // Need to have cart store manager view
+               response.sendRedirect("View/cart_store_manager.jsp");
+
+            }
+
         }
     }
 
