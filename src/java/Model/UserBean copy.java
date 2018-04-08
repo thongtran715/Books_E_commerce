@@ -44,16 +44,11 @@ public class UserBean implements Serializable{
             
             // 4. Process the result set
             return res.getString(name);
-            
-         
-        
+
         }
-        catch (Exception e){
-            System.err.println(e);
-        }
+        catch (Exception e){ System.err.println(e); }
         return null;
     }
 
-    
 }
 
