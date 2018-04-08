@@ -33,7 +33,7 @@ public class InventoryBean implements Serializable {
             Statement stmt = conn.createStatement();
             
             // 3. Execute the SQL query
-            ResultSet res = stmt.executeQuery("select book_id from Inventory where");
+            ResultSet res = stmt.executeQuery("select book_id from Inventory");
             
             // 4. Process the result set
             while(res.next()){
