@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.*;
+import java.sql.*;
 
 public class InventoryBean implements Serializable {
     
@@ -23,7 +24,28 @@ public class InventoryBean implements Serializable {
     
     //other
     public ArrayList<Integer> listAll(String book){
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        try {
+            // 1. Get a connection to database
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project2", "root", "root");
+            
+            // 2. Create a statement
+            Statement stmt = conn.createStatement();
+            
+            // 3. Execute the SQL query
+            ResultSet res = stmt.executeQuery("select book_id from Inventory where");
+            
+            // 4. Process the result set
+            while(res.next()){
+                list.add(res.getInt(book_id));
+            }
+         
         
+        }
+        catch (Exception e){
+            System.err.println(e);
+        }
+        return list;
     }
     
 }

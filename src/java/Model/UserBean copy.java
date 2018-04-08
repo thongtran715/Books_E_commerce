@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.sql.*;
 
 public class UserBean implements Serializable{
     
@@ -28,23 +29,28 @@ public class UserBean implements Serializable{
     public void setTypeofuser(int typeofuser) { this.typeofuser = typeofuser; }
     
     //other
-    public void returnName(){
+    public String returnName(String email){
         try {
             // 1. Get a connection to database
-            Connection conn = DriveManager.getConnection("jdbc:mysql://localhost:3306/Project2", "root", "root");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project2", "root", "root");
             
             // 2. Create a statement
             Statement stmt = conn.createStatement();
             
             // 3. Execute the SQL query
-            String str = stmt.executeQuery("")
+            ResultSet res = stmt.executeQuery("select name from user where " +
+                    "email =' " + email + "'");
             
             // 4. Process the result set
+            return res.getString(name);
             
          
         
         }
-        catch (Exception )
+        catch (Exception e){
+            System.err.println(e);
+        }
+        return null;
     }
 
     
