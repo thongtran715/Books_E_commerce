@@ -1,8 +1,4 @@
-<%--
-    Document   : checkout
-    Created on : Jun 9, 2010, 3:59:32 PM
-    Author     : tgiunipero
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
