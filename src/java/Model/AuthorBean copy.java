@@ -12,21 +12,13 @@ public class AuthorBean implements Serializable {
         this.author = author;
     }
 
-    public int getAuthor_id() {
-        return author_id;
-    }
+    //getters
+    public int getAuthor_id() { return author_id; }
+    public String getAuthor() { return author; }
 
-    public void setAuthor_id(int author_id) {
-        this.author_id = author_id;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+    //setters
+    public void setAuthor_id(int author_id) { this.author_id = author_id; }
+    public void setAuthor(String author) { this.author = author; }
     
    
 }

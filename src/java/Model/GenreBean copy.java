@@ -12,21 +12,13 @@ public class GenreBean implements Serializable {
         this.genre = genre;
     }
 
-    public int getGenre_id() {
-        return genre_id;
-    }
+    //getters
+    public int getGenre_id() { return genre_id; }
+    public String getGenre() { return genre; }
 
-    public void setGenre_id(int genre_id) {
-        this.genre_id = genre_id;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
+    //setters
+    public void setGenre_id(int genre_id) { this.genre_id = genre_id; }
+    public void setGenre(String genre) { this.genre = genre; }
     
     
 }

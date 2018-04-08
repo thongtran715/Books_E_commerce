@@ -8,47 +8,44 @@ public class UserBean implements Serializable{
     private int typeofuser; 
     
     public UserBean(){}
-    
     public UserBean(int user_id, String name, String email, int typeofuser){
         this.user_id = user_id;
         this.name = name;
         this.email = email;
         this.typeofuser = typeofuser;
-        
-    }
-
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getTypeofuser() {
-        return typeofuser;
-    }
-
-    public void setTypeofuser(int typeofuser) {
-        this.typeofuser = typeofuser;
     }
     
+    //getters
+    public int getUser_id() { return user_id; }
+    public String getName() { return name; }
+    public String getEmail() { return email; }
+    public int getTypeofuser() { return typeofuser; }
+
+    //setters
+    public void setUser_id(int user_id) { this.user_id = user_id; }
+    public void setName(String name) { this.name = name; }
+    public void setEmail(String email) { this.email = email; }
+    public void setTypeofuser(int typeofuser) { this.typeofuser = typeofuser; }
+    
+    //other
+    public void returnName(){
+        try {
+            // 1. Get a connection to database
+            Connection conn = DriveManager.getConnection("jdbc:mysql://localhost:3306/Project2", "root", "root");
+            
+            // 2. Create a statement
+            Statement stmt = conn.createStatement();
+            
+            // 3. Execute the SQL query
+            String str = stmt.executeQuery("")
+            
+            // 4. Process the result set
+            
+         
+        
+        }
+        catch (Exception )
+    }
 
     
 }
