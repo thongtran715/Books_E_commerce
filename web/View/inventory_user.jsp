@@ -16,7 +16,7 @@
 
                     <div class="headerWidget">
                
-                    <a href="./cart.jsp">Cart</a>
+                    <a href="./CartController">Cart</a>
                     </div>
 
                     <div class="headerWidget">
@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="headerWidget">
-                         <a href="./checkout.jsp">Checkout</a>
+                         <a href="./CheckoutController">Checkout</a>
                     </div>
 
                 </div>

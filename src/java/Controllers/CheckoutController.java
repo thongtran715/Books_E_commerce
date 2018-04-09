@@ -5,7 +5,6 @@
  */
 package Controllers;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,8 +18,8 @@ import java.util.ArrayList;
  *
  * @author ThongTran
  */
-@WebServlet(name = "CartController", urlPatterns = {"/CartController"})
-public class CartController extends HttpServlet {
+@WebServlet(name = "CheckoutController", urlPatterns = {"/CheckoutController"})
+public class CheckoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,48 +34,28 @@ public class CartController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-      
+            /* TODO output your page here. You may use following sample code. */
+           
+            String checkOut = (String)request.getParameter("checkOut");
             
+            // Need to have a model to hold the mailing session 
+            // Get the user info 
             UserBean user = (UserBean)request.getAttribute("user_info");
             String user_id = user.getUserId();
+            CartBean cartBeans = new CartBean() ; 
+            ArrayList<BookCartBean> books = new ArrayList<BookCartBean> ();
+            books = cartBeans.fetchAllCartBooksByUserId(user_id);
             
-            CartBean cart = new CartBean();
             
-            ArrayList<BookCartBean>  booksCart = new ArrayList<BookCartBean>();
-            booksCart = cart.fetchAllCartBooksByUserId(user_id);
-            
-            request.setAttribute("cart_info", booksCart);
-            
-            // Check if the edit button is checked, and checked if the delete button is clicked 
-            String edit_btn = request.getParameter("Edit_Items");
-            String delete_btn = request.getParameter("delete_items");
-            
-            if (edit_btn != null) {
-                // First we need to find if this item is existed inside the user db 
+            if (checkOut != null){
+                // Clear the Cart controller 
                 
-                
-                return;
-            }
-            else if (delete_btn != null) {
-                return;
             }
             
             
-            // Once getting the user name . We will call the cart to fetch all the 
             
             
             
-            // seperate the type for the user
-            // Need to have cart view for normal user
-            if (user.getUserType() == "0") {
-            response.sendRedirect("View/cart.jsp");
-            }
-            else if (user.getUserType() == "1") {
-                // Need to have cart store manager view
-               response.sendRedirect("View/cart_store_manager.jsp");
-
-            }
-
         }
     }
 

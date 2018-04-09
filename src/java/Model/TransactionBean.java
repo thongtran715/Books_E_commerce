@@ -22,6 +22,12 @@ public class TransactionBean implements Serializable{
     public void setTrans_id(int trans_id) { this.trans_id = trans_id; }
     public void setCart_id(int cart_id) { this.cart_id = cart_id; }
     
+    public ArrayList<BookBean> fetchAllBooksHistoryByUserId(String userid) {
+        ArrayList<BookBean> books = new ArrayList<BookBean>();
+        return books;
+    }
+    
+    
     //other
         //call this if user decides to go through with the sale
     public void SaleCommit(){

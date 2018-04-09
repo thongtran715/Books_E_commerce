@@ -61,4 +61,9 @@ public class CartBean implements Serializable {
         catch (Exception e){ System.err.println(e); }
         return 0;
     }
+
+    public ArrayList<BookCartBean> fetchAllCartBooksByUserId(String user_id) {
+        ArrayList<BookCartBean> cartsBooked = new ArrayList<BookCartBean>();
+        return cartsBooked;
+    }
 }

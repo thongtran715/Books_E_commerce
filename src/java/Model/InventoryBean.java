@@ -52,4 +52,8 @@ public class InventoryBean implements Serializable {
         return list;
     }
     
+    
+    public int number_of_quantity_with_book_id(int book_id) {
+        return 0;
+    }
 }

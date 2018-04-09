@@ -63,14 +63,27 @@ public class InventoryController extends HttpServlet {
                 int book_id = Integer.parseInt(request.getParameter("book_id"));
                 int userId  = Integer.parseInt(user.getUserId());
                 int quantity = Integer.parseInt(request.getParameter("quantity"));
+                
+                // Check if the quanity of the items are in limit
+                int quantity_limit = invenBean.number_of_quantity_with_book_id(book_id);
+                
+                // If the number of quantity purchases are more than limit 
+                if (quantity > quantity_limit) {
+                    String message = "You can't purchase the quantity more than our limit";
+                    request.setAttribute("error_message", message);
+                    response.sendRedirect("View/add_cart_fail.jsp");
+                }
+                
                 // Save all the info inside the cartbean 
                 CartBean add_item_cart = new CartBean(quantity, book_id,userId);
                 if (add_item_cart.addCartToDb()) {
                     // If the cart is added successfully
-                    response.sendRedirect("add_cart_sucess.jsp");
+                    response.sendRedirect("View/add_cart_sucess.jsp");
                 }
                 else {
-                    response.sendRedirect("add_cart_fail.jsp");
+                    String message = "Something wrong with your order";
+                    request.setAttribute("error_message", out);
+                    response.sendRedirect("View/add_cart_fail.jsp");
                 }
                 
             } 

@@ -6,14 +6,45 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Welcome to the Bookstore</title>
+        <link rel="stylesheet" type="text/css" href="View/css/bookstore.css">
     </head>
     <body>
-        <div>TODO write content</div>
-        <A HREF = "./View/login.jsp">Login</A>
-        <A HREF = "./homepage.jsp">Homepage</A>
-        <A HREF = "./cart.jsp">Cart</A>
+        <div id="main">
+            
+            <div id="header">
+                <div id="widgetBar">
+
+                    <div class="headerWidget">
+                        <a href="./cart.jsp">Cart</a>
+                    </div>
+
+                    <div class="headerWidget">
+                        <a href="./login.jsp">Login</a>
+                    </div>
+
+                </div>
+
+                <a href="#">
+                    <img src="#" id="logo" alt="Bookstore">
+                </a>
+
+                <img src="#" id="logoText" alt="Bookstore Text">
+            </div>
+            
+            <div id ="indexLeftColumn">
+               <a href="./InventoryController">Catalog</a>
+            </div>
+            
+                <div id ="indexRightColumn">
+                    right column
+                </div>
+            <div id="footer">
+                footer
+            </div
+        </div>
+        
+        
     </body>
 </html>

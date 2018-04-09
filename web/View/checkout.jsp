@@ -17,10 +17,10 @@
 
                     <div class="headerWidget">
                
-                    <a href="./cart.jsp">Cart</a>
+                    <a href="./CartController">Cart</a>
                     </div>
                     <div class="headerWidget">
-                            <a href="./inventory_user.jsp">Catalog</a>
+                            <a href="./InventoryController">Catalog</a>
                     </div>
                     <div class="headerWidget">
                        <a href="./login.jsp">Login</a>

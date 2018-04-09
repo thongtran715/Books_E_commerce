@@ -34,7 +34,7 @@
                 <br/>
                     <div class="container">
                        <form action ="../LogInController" method="post">
-                        Enter Username:<input type="text" name="username"> <br/>
+                        Enter Username:<input type="text" name="email"> <br/>
                         Enter Password:  <input type="text" name="password"> <br/>
                         <input type="submit" value="Login">
                        </form>
