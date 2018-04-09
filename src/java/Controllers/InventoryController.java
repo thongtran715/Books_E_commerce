@@ -7,12 +7,14 @@ package Controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import Model.*;
+import java.util.ArrayList;
 /**
  *
  * @author ThongTran
@@ -35,11 +37,34 @@ public class InventoryController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             // Get the user_email 
             // Need to have Inventory Model to fetch all the inventory 
+            // Check the user if they are not admin user
+            
+            // In this case, we need to create an inventoryBean object 
+            // From Inventory Bean object, we also need to create an array of Books 
+            // use inventoryBean object to call to the db and fetch all the information 
+            // We need from the Bookbean and store it
+            InventoryBean invenBean = new InventoryBean () ;
+            ArrayList<BookBean> books = new ArrayList<BookBean>();
+            books = invenBean.fetchAllBooks ();
+            
+            // Finally we also need to save the attribute
+            request.setAttribute("Books_Info", books);
             
             
+            // When we are done with the data, we need to call the view to display it.
+            
+            UserBean user = (UserBean)request.getAttribute("user_info");
+            if (user.getUserType() == "2") {
+                response.sendRedirect("View/inventory_admin.jsp");
+                return;
+            }
+            else {
             // Need to have inventory view to display
-            response.sendRedirect("View/inventory.jsp");
-            
+            RequestDispatcher rd = null;
+            rd=request.getRequestDispatcher("View/inventory_user.jsp");  
+            rd.forward(request, response);
+            return;
+            }
             
         }
     }

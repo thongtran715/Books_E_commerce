@@ -40,20 +40,37 @@ public class LogInController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */     
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            AccessBean log = new AccessBean();
-            log.emailUserName(email);
             RequestDispatcher rd = null;
+
+            // Check if the email and password is empty 
+            if (email.isEmpty () || password.isEmpty()) {
+                String message = "Please fill in Email and Password";
+                request.setAttribute("error_message", message);
+                rd=request.getRequestDispatcher("View/login_error.jsp");  
+                 rd.forward(request, response);
+                 return;
+            }
+            
+            
+            AccessBean log = new AccessBean();
+            // Set the user email
+            log.emailUserName(email);
             // It means we first check if the user successfully logged in the system
             if (log.logInToDb(password)) {
                 // Save the session 
-                request.setAttribute("user_info", log);
+                
+                UserBean user = new UserBean() ;
+                user = log.fetchUserInfo () ;
+                request.setAttribute("user_info", user);
+
+                
                 // Navigate to different view 
                  if (log.getUserType() == 0 ) // It means the user is logged in is the normal user
                  {
-                 rd=request.getRequestDispatcher("CartController");  
+                 rd=request.getRequestDispatcher("InventoryController");  
                  }
                  else if (log.getUserType() == 1){ // It means the user is logged in is the store manager
-                   rd=request.getRequestDispatcher("CartController");  
+                   rd=request.getRequestDispatcher("InventoryController");  
                  }
                  else {
                      rd=request.getRequestDispatcher("AdminController");  
@@ -61,7 +78,9 @@ public class LogInController extends HttpServlet {
                  rd.forward(request, response);
             }
             else {
-                 rd=request.getRequestDispatcher("login_error.jsp");  
+                 String message = "Your email and password is not found. Please check again";
+                 request.setAttribute("error_message", message);
+                 rd=request.getRequestDispatcher("View/login_error.jsp");  
                  rd.forward(request, response);
             }
             

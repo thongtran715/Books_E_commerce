@@ -1,8 +1,9 @@
+package Model;
 import java.io.Serializable;
 import java.util.*;
 import java.sql.*;
 
-public class TransactionBean {
+public class TransactionBean implements Serializable{
     private int trans_id;
     private int cart_id;
     

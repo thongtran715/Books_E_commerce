@@ -37,16 +37,23 @@ public class CartController extends HttpServlet {
             AccessBean userBean = (AccessBean)request.getAttribute("user_info");
             String user_email = userBean.getUserEmail();
             
+            UserBean user = (UserBean)request.getAttribute("user_info");
+            String user_id = user.getUserId();
+            
+            CartBean cart = new CartBean();
+            ArrayList<BookCartBean>  booksCart = new ArrayList<BookCartBean>();
+            booksCart = cart.fetchAllCartBooksByUserId(user_id);
+                    
             // Once getting the user name . We will call the cart to fetch all the 
             
             
             
             // seperate the type for the user
             // Need to have cart view for normal user
-            if (userBean.getUserType() == 0) {
+            if (user.getUserType() == "0") {
             response.sendRedirect("View/cart.jsp");
             }
-            else if (userBean.getUserType() == 1) {
+            else if (user.getUserType() == "1") {
                 // Need to have cart store manager view
                response.sendRedirect("View/cart_store_manager.jsp");
 

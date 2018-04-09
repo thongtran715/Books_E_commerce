@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Model.*;
+import javax.servlet.RequestDispatcher;
 /**
  *
  * @author ThongTran
@@ -34,7 +35,19 @@ public class HistoryController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-               AccessBean bean = (AccessBean)request.getAttribute("user_info");
+               UserBean user = (UserBean)request.getAttribute("user_info");
+               String user_id = user.getUserId();
+               // Get the user
+                RequestDispatcher rd = null;
+
+               // Always check if the user is still logged in 
+               if (user == null){
+                   rd=request.getRequestDispatcher("View/login.jsp");  
+                    rd.forward(request, response);
+               }
+               
+
+                       
                // Need a History Model to fetch all the data 
                
                

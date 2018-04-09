@@ -36,4 +36,14 @@ public class AccessBean {
         return 0;
     }
     
+    public UserBean fetchUserInfo() {
+        UserBean user = new UserBean () ;
+        user.setName("Hola");
+        return user;
+    }
+    
+    
+    public void createUserWith(String email, String password, String name){
+        
+    }
 }

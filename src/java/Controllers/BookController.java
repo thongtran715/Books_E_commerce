@@ -7,11 +7,13 @@ package Controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import Model.*;
 
 /**
  *
@@ -34,15 +36,33 @@ public class BookController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet BookController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet BookController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+          
+            // First we will need to get the book's id from the view 
+            String book_id = (String)request.getParameter("book_id");
+            
+            // Check if the book_id is empty.. We will send it to the book not found view
+            if (book_id.isEmpty() || book_id == null){
+                response.sendRedirect("View/Book_error.jsp");
+                return;
+            }
+            
+            // This will get call to call specific Book using this book 
+            BookBean this_book = new BookBean();
+            // Check if this book is on the db 
+            // if the book is not on the db. Then, send it back to error message
+            if (this_book.findBookById(book_id) == null) {
+                response.sendRedirect("View/Book_error.jsp");
+                return;
+            }
+            else {
+                  RequestDispatcher rd = null;
+                // If the book exists from the db, then will call save them 
+                request.setAttribute("book_detail", this_book);
+                rd=request.getRequestDispatcher("View/book_detail.jsp");  
+                rd.forward(request, response);
+            }
+            
+            
         }
     }
 

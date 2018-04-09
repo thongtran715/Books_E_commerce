@@ -1,3 +1,4 @@
+package Model;
 import java.io.Serializable;
 import java.sql.*;
 import java.util.*;
@@ -38,6 +39,13 @@ public class BookBean implements Serializable {
     public void setQuantity(int quantity) { this.quantity = quantity; }
     
     //other
+    public BookBean findBookById(String id ) {
+        
+        BookBean book = new BookBean();
+        // Call to db 
+        book.author = "Something here";
+        return book;
+    }
     
     //returns arraylist filled with titles. 
     public ArrayList<String> listTitle(){

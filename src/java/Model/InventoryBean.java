@@ -1,3 +1,4 @@
+package Model;
 import java.io.Serializable;
 import java.util.*;
 import java.sql.*;
@@ -13,7 +14,10 @@ public class InventoryBean implements Serializable {
         this.inven_id = inven_id;
         this.book_id = book_id;
     }
-    
+    public ArrayList<BookBean> fetchAllBooks () {
+        ArrayList<BookBean> bin = new ArrayList<BookBean>();
+        return bin;
+    }
     //getters
     public int getInven_id() { return inven_id; }
     public int getBook_id() { return book_id; }
