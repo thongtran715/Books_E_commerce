@@ -51,9 +51,34 @@ public class InventoryController extends HttpServlet {
             request.setAttribute("Books_Info", books);
             
             
+          
             // When we are done with the data, we need to call the view to display it.
             
             UserBean user = (UserBean)request.getAttribute("user_info");
+            
+              // Check if the button add to cart is clicked
+            String add_to_cart  = request.getParameter("add_to_cart");
+            if (add_to_cart != null) {
+                // User wants to cart to cart 
+                int book_id = Integer.parseInt(request.getParameter("book_id"));
+                int userId  = Integer.parseInt(user.getUserId());
+                int quantity = Integer.parseInt(request.getParameter("quantity"));
+                // Save all the info inside the cartbean 
+                CartBean add_item_cart = new CartBean(quantity, book_id,userId);
+                if (add_item_cart.addCartToDb()) {
+                    // If the cart is added successfully
+                    response.sendRedirect("add_cart_sucess.jsp");
+                }
+                else {
+                    response.sendRedirect("add_cart_fail.jsp");
+                }
+                
+            } 
+            
+            
+            
+            
+            
             if (user.getUserType() == "2") {
                 response.sendRedirect("View/inventory_admin.jsp");
                 return;

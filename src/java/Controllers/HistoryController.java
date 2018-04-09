@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Model.*;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 /**
  *
@@ -35,14 +36,25 @@ public class HistoryController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-               UserBean user = (UserBean)request.getAttribute("user_info");
-               String user_id = user.getUserId();
+               
+                UserBean user = (UserBean)request.getAttribute("user_info");
+                TransactionBean trans = new TransactionBean() ; 
+                ArrayList<BookBean> books_history_purchased = new ArrayList<BookBean>();
+                books_history_purchased = trans.fetchAllBooksHistoryByUserId(user.getUserId());
+                if (books_history_purchased == null){
+                    // if this not has been in db 
+                    response.sendRedirect("View/history_error.jsp");
+                    return;
+                }
+                
+                request.setAttribute("books_history", books_history_purchased);
+            
                // Get the user
                 RequestDispatcher rd = null;
 
                // Always check if the user is still logged in 
                if (user == null){
-                   rd=request.getRequestDispatcher("View/login.jsp");  
+                   rd=request.getRequestDispatcher("View/history.jsp");  
                     rd.forward(request, response);
                }
                

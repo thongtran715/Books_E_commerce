@@ -8,13 +8,19 @@ public class CartBean implements Serializable {
     private int cart_id;
     private int book_id;
     private int user_id;
+    private int quantity;
     
-    public CartBean(){}
+    public CartBean(){
+        this.book_id = -1;
+        this.user_id = -1;
+        this.quantity = -1;
+    }
 
-    public CartBean(int cart_id, int book_id, int user_id) {
+    public CartBean(int quantity, int book_id, int user_id) {
+        this();
         this.cart_id = cart_id;
-        this.book_id = book_id;
         this.user_id = user_id;
+        this.quantity = quantity;
     }
 
     //getters
@@ -26,6 +32,12 @@ public class CartBean implements Serializable {
     public void setCart_id(int cart_id) { this.cart_id = cart_id; }
     public void setBook_id(int book_id) { this.book_id = book_id; }
     public void setUser_id(int user_id) { this.user_id = user_id; }
+    
+    public boolean addCartToDb() {
+        // Call the db to register this item
+        return true;
+    }
+    
     
     //other
     
