@@ -69,7 +69,9 @@ public class BookBean implements Serializable {
             Statement stmt = conn.createStatement();
             
             // 3. Execute the SQL query
-            ResultSet res = stmt.executeQuery( "select * from book where author='" + author + "'" );
+            ResultSet res = stmt.executeQuery( "SELECT book.title, book.author, book.price, book.description, book.quantity, author.author_id  "
+                    + "                         FROM book, author"
+                    + "                         WHERE book.author=author.author_id AND author.author_id='"+author+"'" );
             
             // 4. Process the result set
             while (res.next()){

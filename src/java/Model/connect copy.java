@@ -35,6 +35,13 @@ public class connect {
         return false;
     }
     
-   
+   public static void main(String[] args){
+       UserBean test = new UserBean();
+       
+       test.returnName("cmoon9@student.gsu.edu");
+       
+       
+       
+   }
   
 }
