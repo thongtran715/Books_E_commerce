@@ -47,6 +47,10 @@ public class InventoryController extends HttpServlet {
             ArrayList<BookBean> books = new ArrayList<BookBean>();
             books = invenBean.fetchAllBooks ();
             
+            
+            
+            
+            
             // Finally we also need to save the attribute
             request.setAttribute("Books_Info", books);
             
@@ -58,6 +62,18 @@ public class InventoryController extends HttpServlet {
             
               // Check if the button add to cart is clicked
             String add_to_cart  = request.getParameter("add_to_cart");
+            String number_quantity = request.getParameter("number_quantity");
+           
+            
+            if (number_quantity.isEmpty()) {
+                String message = "Please choose how many items you want to purchase";
+                request.setAttribute("error_message", message);
+                response.sendRedirect("View/add_cart_fail.jsp");
+                return;
+            }
+            
+            
+            
             if (add_to_cart != null) {
                 // User wants to cart to cart 
                 int book_id = Integer.parseInt(request.getParameter("book_id"));
@@ -84,6 +100,7 @@ public class InventoryController extends HttpServlet {
                     String message = "Something wrong with your order";
                     request.setAttribute("error_message", out);
                     response.sendRedirect("View/add_cart_fail.jsp");
+                    return;
                 }
                 
             } 
