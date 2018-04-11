@@ -14,47 +14,76 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Model.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
  *
  * @author ThongTran
  */
 @WebServlet(name = "RegisterController", urlPatterns = {"/RegisterController"})
-public class RegisterController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+public class RegisterController extends HttpServlet {
+            
+   private  final Pattern VALID_EMAIL_ADDRESS_REGEX = 
+    Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+    private  boolean validate(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+        return matcher.find();
+}
+    
+    
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            RequestDispatcher rd = null;
+
             String email = request.getParameter("email");
             String password_first = request.getParameter("password_first");
             String password_second = request.getParameter("password_second");
             String name = request.getParameter("name");
-            /*
-            AccessBean reg = new AccessBean()
-                    
+            
+            
+            
+            // Check if any of these views are actually empty
+            if (email.isEmpty() || password_first.isEmpty() || password_second.isEmpty()) {
+                String message = "One of the mandatory fields is empty. Please fill out again";
+                request.setAttribute("error_message", message);
+                rd = request.getRequestDispatcher("View/register_error.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
+            // Check if the user is entered the valid email 
+            else if (validate(email) == false){
+                String message = "Invalid Email";
+                request.setAttribute("error_message", message);
+                rd = request.getRequestDispatcher("View/register_error.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            else {
+            UserBean reg = new UserBean();
+                 
             // if they have the same password
             if (password_first.equals(password_second)) {
                  reg.createUserWith (email, password_first, name);
                  // Navigate to login views
-                 RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
+                 rd=request.getRequestDispatcher("View/login.jsp");  
                  rd.forward(request, response);
+                 return;
             }
             else {
-                RequestDispatcher rd=request.getRequestDispatcher("register_error.jsp");  
+                String message = "Your password is not matched. Please check again";
+                request.setAttribute("error_message", message);
+                rd=request.getRequestDispatcher("View/register_error.jsp");  
                 rd.forward(request, response);
+                return;
             }
-            */
-            
+            }
             
         }
     }

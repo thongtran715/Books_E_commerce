@@ -1,3 +1,5 @@
+package Model;
+
 import java.io.Serializable;
 import java.sql.*;
 import java.util.*;
@@ -12,8 +14,7 @@ public class BookBean implements Serializable {
     private int quantity;
 
     public BookBean(){}
-    public BookBean(int book_id, String title, String author, double price, String description, int quantity) {
-        this.book_id = book_id;
+    public BookBean(String title, String author, double price, String description, int quantity) {
         this.title = title;
         this.author = author;
         this.price = price;
@@ -39,21 +40,42 @@ public class BookBean implements Serializable {
     
     //other
     
+    public boolean findBookById(String book_id){
+        
+        boolean result = false;
+        try {
+                // 1. Get a connection to database
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/Project2", "root", "root");           
+                // 2. Create a statement
+            Statement stmt = conn.createStatement();            
+                // 3. Execute the SQL query
+            ResultSet res = stmt.executeQuery("SELECT * FROM BOOK WHERE book_id = '" +book_id+"'");            
+                // 4. Process the result set
+                while(res.next()){
+                    result = true;
+                }
+           }
+          catch (Exception e){ System.err.println(e); }
+    return result;
+    }
+    
+    
+    
     //returns arraylist filled with titles. 
+ 
     public ArrayList<String> listTitle(){
         ArrayList<String> list = new ArrayList<String>();
         try {
             // 1. Get a connection to database
+            Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project2", "root", "root");
-            
             // 2. Create a statement
             Statement stmt = conn.createStatement();
-            
             // 3. Execute the SQL query
             ResultSet res = stmt.executeQuery("select title from book");
-            
             // 4. Process the result set
-            while(res.next()){ list.add(res.getString(title)); }
+            while(res.next()){ list.add(res.getString("title")); }
         }
         catch (Exception e){ System.err.println(e); }
         return list;
@@ -63,11 +85,10 @@ public class BookBean implements Serializable {
     public void filterAuthor(String author){
         try {
             // 1. Get a connection to database
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project2", "root", "root");
-            
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project2", "root", "root");           
             // 2. Create a statement
-            Statement stmt = conn.createStatement();
-            
+            Statement stmt = conn.createStatement();           
             // 3. Execute the SQL query
             ResultSet res = stmt.executeQuery( "SELECT book.title, book.author, book.price, book.description, book.quantity, author.author_id  "
                     + "                         FROM book, author"

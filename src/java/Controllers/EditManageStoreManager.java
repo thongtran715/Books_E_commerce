@@ -13,15 +13,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Model.*;
-import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
 /**
  *
  * @author ThongTran
  */
-@WebServlet(name = "HistoryController", urlPatterns = {"/HistoryController"})
-public class HistoryController extends HttpServlet {
+@WebServlet(name = "EditManageStoreManager", urlPatterns = {"/EditManageStoreManager"})
+public class EditManageStoreManager extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,34 +35,40 @@ public class HistoryController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-               RequestDispatcher rd = null;
-                HttpSession session = request.getSession(); 
-                UserBean user = (UserBean)request.getAttribute("user_info");
-                TransactionBean trans = new TransactionBean() ; 
-                ArrayList<BookBean> books_history_purchased = new ArrayList<BookBean>();
-                books_history_purchased = trans.fetchAllBooksHistoryByUserId(user.getUserId());
-                if (books_history_purchased.size() == 0){
-                    // if this not has been in db 
-                    String message = "Your history transaction is empty";
-                    session.setAttribute("error_message", message);
-                    rd=request.getRequestDispatcher("View/history_error.jsp");  
-                    rd.forward(request, response);
-                    return;
-                }
-                
-                session.setAttribute("books_history", books_history_purchased);
-            
+                      RequestDispatcher rd = null;
 
-               // Always check if the user is still logged in 
-               if (user != null){
-                   rd=request.getRequestDispatcher("View/history.jsp");  
-                   rd.forward(request, response);
-               }
-               else {
-               // Need to have History View 
-               response.sendRedirect("View/login.jsp");
-               }
+            String book_id = request.getParameter("book_id");
+            
+            InventoryBean invenBean = new InventoryBean() ; 
+            
+            BookBean book = new BookBean() ; 
+            book = invenBean.fetchBookByBookId(book_id);
+            
+            HttpSession session = request.getSession();
+            session.setAttribute("book_edit", book);
+            
+            
+            
+            String change_book_name = request.getParameter("change_book");
+            int change_quantity = Integer.parseInt(request.getParameter("change_quantity"));
+            String change_author = request.getParameter("change_author");
+            String change_title = request.getParameter("change_title");
+            String change_description = request.getParameter("change_description");
+            double change_price = Double.parseDouble(request.getParameter("change_price"));
+            
+            String cancel_btn = request.getParameter("cancel_btn");
+            if (cancel_btn == null)
+            {
+            // Change the items 
+            invenBean.editInventoryByBookId(book_id, change_title, change_quantity,change_author,change_description,change_price);
+            
+            rd = request.getRequestDispatcher("View/edit_item_sucess.jsp");
+            rd.forward(request, response);
+            }
+            else {
+            rd = request.getRequestDispatcher("View/store_manager.jsp");
+            rd.forward(request, response);
+            }
         }
     }
 

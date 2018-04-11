@@ -20,8 +20,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author ThongTran
  */
-@WebServlet(name = "HistoryController", urlPatterns = {"/HistoryController"})
-public class HistoryController extends HttpServlet {
+@WebServlet(name = "CheckoutController", urlPatterns = {"/CheckoutController"})
+public class CheckoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,35 +36,34 @@ public class HistoryController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            RequestDispatcher rd = null;
             /* TODO output your page here. You may use following sample code. */
-               RequestDispatcher rd = null;
-                HttpSession session = request.getSession(); 
-                UserBean user = (UserBean)request.getAttribute("user_info");
-                TransactionBean trans = new TransactionBean() ; 
-                ArrayList<BookBean> books_history_purchased = new ArrayList<BookBean>();
-                books_history_purchased = trans.fetchAllBooksHistoryByUserId(user.getUserId());
-                if (books_history_purchased.size() == 0){
-                    // if this not has been in db 
-                    String message = "Your history transaction is empty";
-                    session.setAttribute("error_message", message);
-                    rd=request.getRequestDispatcher("View/history_error.jsp");  
-                    rd.forward(request, response);
-                    return;
-                }
-                
-                session.setAttribute("books_history", books_history_purchased);
             
-
-               // Always check if the user is still logged in 
-               if (user != null){
-                   rd=request.getRequestDispatcher("View/history.jsp");  
-                   rd.forward(request, response);
-               }
-               else {
-               // Need to have History View 
-               response.sendRedirect("View/login.jsp");
-               }
-        }
+            String checkOut = (String)request.getParameter("checkOut");
+            
+            if (checkOut != null)
+            {
+            HttpSession session = request.getSession();
+            UserBean user = (UserBean)session.getAttribute("user_info");
+            ArrayList<BookBean> books = (ArrayList<BookBean>)(session.getAttribute("cart_info"));
+            
+           
+            TransactionBean trans = new TransactionBean() ; 
+            
+            // if they checkout, push every book id in transaction 
+            trans.saleCommit();
+            
+            CartBean cart = new CartBean();
+            // Remove Attribute
+            session.removeAttribute("cart_info");
+            cart.clearCartForUserId(user.getUserId());
+              rd=request.getRequestDispatcher("View/inventory_user.jsp");  
+              rd.include(request, response);
+              
+                return;
+            }
+            
+        }   
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

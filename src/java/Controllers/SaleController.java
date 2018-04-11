@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Model.*;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpSession;
 /**
  *
  * @author ThongTran
@@ -35,14 +37,32 @@ public class SaleController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-             AccessBean logBean = (AccessBean)request.getAttribute("user_info");
-             // Need to have Sale Model to fetch all the sale 
-             
-             
-             
-             response.sendRedirect("View/sale.jsp");
-             
+            RequestDispatcher rd = null;
+            HttpSession session = request.getSession();
+            UserBean user = (UserBean)session.getAttribute("user_info");
+            int store_manager_id = user.getUserId();
+            TransactionBean transactions = new TransactionBean();
+            
+            //Uncomment this section to load the SaleBean
+            ArrayList<TransactionBean> sales = new ArrayList<TransactionBean>();
+            sales = transactions.findAllSaleFromUserId(store_manager_id);
+            session.setAttribute("sales_info", sales);
+            
+            if (user == null){
+                response.sendRedirect("View/inventory_user.jsp");
+            }
+            else {
+            if (sales.size() == 0){
+                rd = request.getRequestDispatcher("View/empty_sale.jsp");
+                rd.forward(request, response);
+            }
+            else {
+                 rd = request.getRequestDispatcher("View/sale.jsp");
+                 rd.forward(request, response);
+                 }
+            }
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -7,21 +7,20 @@ package Controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Model.*;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
+
 /**
  *
  * @author ThongTran
  */
-@WebServlet(name = "HistoryController", urlPatterns = {"/HistoryController"})
-public class HistoryController extends HttpServlet {
+@WebServlet(name = "LogoutController", urlPatterns = {"/LogoutController"})
+public class LogoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,34 +35,15 @@ public class HistoryController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-               RequestDispatcher rd = null;
-                HttpSession session = request.getSession(); 
-                UserBean user = (UserBean)request.getAttribute("user_info");
-                TransactionBean trans = new TransactionBean() ; 
-                ArrayList<BookBean> books_history_purchased = new ArrayList<BookBean>();
-                books_history_purchased = trans.fetchAllBooksHistoryByUserId(user.getUserId());
-                if (books_history_purchased.size() == 0){
-                    // if this not has been in db 
-                    String message = "Your history transaction is empty";
-                    session.setAttribute("error_message", message);
-                    rd=request.getRequestDispatcher("View/history_error.jsp");  
-                    rd.forward(request, response);
-                    return;
-                }
                 
-                session.setAttribute("books_history", books_history_purchased);
+                RequestDispatcher rd = null;
+                HttpSession session = request.getSession();
+                 session.removeAttribute("user_info");
+                 rd=request.getRequestDispatcher("View/login.jsp");  
+                 rd.forward(request, response);
+                
             
-
-               // Always check if the user is still logged in 
-               if (user != null){
-                   rd=request.getRequestDispatcher("View/history.jsp");  
-                   rd.forward(request, response);
-               }
-               else {
-               // Need to have History View 
-               response.sendRedirect("View/login.jsp");
-               }
+            
         }
     }
 
