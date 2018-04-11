@@ -66,4 +66,12 @@ public class CartBean implements Serializable {
         ArrayList<BookCartBean> cartsBooked = new ArrayList<BookCartBean>();
         return cartsBooked;
     }
+
+    public void update_quantity_by(String user_id, int book_id, int quantity) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void delete_cart(String user_id, int book_id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

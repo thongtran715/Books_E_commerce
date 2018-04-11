@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Model.*;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,7 +37,7 @@ public class BookController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-          
+          HttpSession session = request.getSession();
             // First we will need to get the book's id from the view 
             String book_id = (String)request.getParameter("book_id");
             
@@ -50,14 +51,14 @@ public class BookController extends HttpServlet {
             BookBean this_book = new BookBean();
             // Check if this book is on the db 
             // if the book is not on the db. Then, send it back to error message
-            if (this_book.findBookById(book_id) == null) {
+            if (this_book.findBookById(book_id) == false) {
                 response.sendRedirect("View/Book_error.jsp");
                 return;
             }
             else {
                   RequestDispatcher rd = null;
                 // If the book exists from the db, then will call save them 
-                request.setAttribute("book_detail", this_book);
+                session.setAttribute("book_detail", this_book);
                 rd=request.getRequestDispatcher("View/book_detail.jsp");  
                 rd.forward(request, response);
             }

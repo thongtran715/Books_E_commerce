@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Model.*;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpSession;
 /**
  *
  * @author ThongTran
@@ -35,12 +36,24 @@ public class SaleController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-             AccessBean logBean = (AccessBean)request.getAttribute("user_info");
-             // Need to have Sale Model to fetch all the sale 
-             
-             
-             
-             response.sendRedirect("View/sale.jsp");
+            RequestDispatcher rd = null;
+            HttpSession session = request.getSession();
+            UserBean user = (UserBean)session.getAttribute("user_info");
+            String store_manager_id = user.getUserId();
+            
+            
+            InventoryBean invenBean = new InventoryBean() ; 
+            
+            /*
+            ArrayList<SaleBean> sales = new ArrayList<SaleBean>();
+            sales = invenBean.findAllSaleFromUserId(store_manager_id);
+            session.setAttribute("sales_info", sales);
+            */
+            
+            
+            // Need to have Sale Model to fetch all the sale 
+            rd = request.getRequestDispatcher("View/sale.jsp");
+            rd.forward(request, response);
              
         }
     }

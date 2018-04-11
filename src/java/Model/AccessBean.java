@@ -31,10 +31,7 @@ public class AccessBean {
         // QUerry the db 
         return true;
     }
-    public int getUserType () {
-        // Calling from db and return the type of the user
-        return 0;
-    }
+ 
     
     public UserBean fetchUserInfo() {
         UserBean user = new UserBean () ;

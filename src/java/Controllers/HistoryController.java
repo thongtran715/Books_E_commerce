@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import Model.*;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpSession;
 /**
  *
  * @author ThongTran
@@ -36,36 +37,33 @@ public class HistoryController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-               
-                UserBean user = (UserBean)request.getAttribute("user_info");
+               RequestDispatcher rd = null;
+                HttpSession session = request.getSession(); 
+                UserBean user = (UserBean)session.getAttribute("user_info");
                 TransactionBean trans = new TransactionBean() ; 
                 ArrayList<BookBean> books_history_purchased = new ArrayList<BookBean>();
                 books_history_purchased = trans.fetchAllBooksHistoryByUserId(user.getUserId());
-                if (books_history_purchased == null){
+                if (books_history_purchased.size() == 0){
                     // if this not has been in db 
-                    response.sendRedirect("View/history_error.jsp");
+                    String message = "Your history transaction is empty";
+                    session.setAttribute("error_message", message);
+                    rd=request.getRequestDispatcher("View/history_error.jsp");  
+                    rd.forward(request, response);
                     return;
                 }
                 
-                request.setAttribute("books_history", books_history_purchased);
+                session.setAttribute("books_history", books_history_purchased);
             
-               // Get the user
-                RequestDispatcher rd = null;
 
                // Always check if the user is still logged in 
-               if (user == null){
+               if (user != null){
                    rd=request.getRequestDispatcher("View/history.jsp");  
-                    rd.forward(request, response);
+                   rd.forward(request, response);
                }
-               
-
-                       
-               // Need a History Model to fetch all the data 
-               
-               
-               
+               else {
                // Need to have History View 
-               response.sendRedirect("View/history.jsp");
+               response.sendRedirect("View/login.jsp");
+               }
         }
     }
 

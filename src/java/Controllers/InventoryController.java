@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Model.*;
 import java.util.ArrayList;
+import javax.servlet.http.HttpSession;
 /**
  *
  * @author ThongTran
@@ -46,50 +47,54 @@ public class InventoryController extends HttpServlet {
             InventoryBean invenBean = new InventoryBean () ;
             ArrayList<BookBean> books = new ArrayList<BookBean>();
             books = invenBean.fetchAllBooks ();
-            
-            
-            
-            
-            
+            HttpSession session = request.getSession();
             // Finally we also need to save the attribute
-            request.setAttribute("Books_Info", books);
+            session.setAttribute("Books_Info", books);
             
-            
+            RequestDispatcher rd = null;
+       
           
             // When we are done with the data, we need to call the view to display it.
-            
             UserBean user = (UserBean)request.getAttribute("user_info");
             
               // Check if the button add to cart is clicked
             String add_to_cart  = request.getParameter("add_to_cart");
-            String number_quantity = request.getParameter("number_quantity");
-           
             
-            if (number_quantity.isEmpty()) {
-                String message = "Please choose how many items you want to purchase";
-                request.setAttribute("error_message", message);
-                response.sendRedirect("View/add_cart_fail.jsp");
-                return;
-            }
-            
-            
-            
+            // If add to cart is pressed, 
             if (add_to_cart != null) {
-                // User wants to cart to cart 
+                // Get the book id and also user id 
                 int book_id = Integer.parseInt(request.getParameter("book_id"));
                 int userId  = Integer.parseInt(user.getUserId());
+                // If the customer has not chosen their products 
+                if (request.getParameter("quantity") == null) {
+                String message = "Please choose how many items you want to purchase";
+                session.setAttribute("error_message", message);
+                rd=request.getRequestDispatcher("View/inventory_user.jsp");  
+                rd.forward(request, response);
+                return;
+                }
+                // Check if an item is valid in db 
+                else if (!invenBean.validate_book_from_db_by_bookID(book_id)){
+                String message = "The Book you have chosen is no longer available";
+                session.setAttribute("error_message", message);
+                rd=request.getRequestDispatcher("View/inventory_user.jsp");  
+                rd.forward(request, response);
+                }
+                else {
                 int quantity = Integer.parseInt(request.getParameter("quantity"));
-                
-                // Check if the quanity of the items are in limit
+                // **********************Check if the quanity of the items are in limit
                 int quantity_limit = invenBean.number_of_quantity_with_book_id(book_id);
                 
                 // If the number of quantity purchases are more than limit 
                 if (quantity > quantity_limit) {
                     String message = "You can't purchase the quantity more than our limit";
-                    request.setAttribute("error_message", message);
-                    response.sendRedirect("View/add_cart_fail.jsp");
+                    session.setAttribute("error_message", message);
+                    rd = request.getRequestDispatcher("View/add_cart_fail.jsp");
+                    rd.forward(request, response);
+                    return;
                 }
                 
+                // Once we found everything is ok, process to load it Cart bean and to the db 
                 // Save all the info inside the cartbean 
                 CartBean add_item_cart = new CartBean(quantity, book_id,userId);
                 if (add_item_cart.addCartToDb()) {
@@ -98,16 +103,16 @@ public class InventoryController extends HttpServlet {
                 }
                 else {
                     String message = "Something wrong with your order";
-                    request.setAttribute("error_message", out);
+                    session.setAttribute("error_message", message);
                     response.sendRedirect("View/add_cart_fail.jsp");
                     return;
                 }
-                
+                }
             } 
             
             
             
-            
+           
             
             if (user.getUserType() == "2") {
                 response.sendRedirect("View/inventory_admin.jsp");
@@ -115,12 +120,12 @@ public class InventoryController extends HttpServlet {
             }
             else {
             // Need to have inventory view to display
-            RequestDispatcher rd = null;
             rd=request.getRequestDispatcher("View/inventory_user.jsp");  
             rd.forward(request, response);
             return;
             }
             
+         
         }
     }
 

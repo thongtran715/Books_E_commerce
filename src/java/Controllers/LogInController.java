@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.RequestDispatcher;  
 import Model.*;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -51,7 +52,7 @@ public class LogInController extends HttpServlet {
                  return;
             }
             
-            
+            else {
             AccessBean log = new AccessBean();
             // Set the user email
             log.emailUserName(email);
@@ -61,18 +62,17 @@ public class LogInController extends HttpServlet {
                 
                 UserBean user = new UserBean() ;
                 user = log.fetchUserInfo () ;
-                request.setAttribute("user_info", user);
-
-                
+                HttpSession session = request.getSession();
+                session.setAttribute("user_info", user);     
                 // Navigate to different view 
-                 if (log.getUserType() == 0 ) // It means the user is logged in is the normal user
+                 if ("0".equals(user.getUserType())) // It means the user is logged in is the normal user
                  {
                  rd=request.getRequestDispatcher("InventoryController");  
                  }
-                 else if (log.getUserType() == 1){ // It means the user is logged in is the store manager
+                 else if ("1".equals(user.getUserType())){ // It means the user is logged in is the store manager
                    rd=request.getRequestDispatcher("InventoryController");  
                  }
-                 else {
+                 else if ("2".equals(user.getUserType())){
                      rd=request.getRequestDispatcher("AdminController");  
                  }
                  rd.forward(request, response);
@@ -87,7 +87,7 @@ public class LogInController extends HttpServlet {
             
         }
     }
-
+    }
       
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

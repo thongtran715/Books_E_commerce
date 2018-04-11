@@ -20,36 +20,55 @@ import Model.*;
 @WebServlet(name = "AdminManageUserController", urlPatterns = {"/AdminManageUserController"})
 public class AdminManageUserController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            AccessBean bean = (AccessBean)request.getAttribute("user_info");
-            if (bean.getUserType() == 2) {
-                // if the user is admin
+      
+                /*
+                    RequestDispatcher rd = null;
+                    Uncomment this section when model and views are ready 
+                    HttpSession session = request.getSession();
+                    UserBean user = (UserBean)session.getAttribute("user_info");
+                    if (user != null) {
+                    if (user.getUserType().equal("2") == false)
+                    {   
+                            response.sendRedirect("View/inventory_user.jsp");
+                            return;
+                    }
+                     else{
+                        
+                            // Fetch all the user 
+                            AdminBean admin = new AdminBean();
+                            ArrayList<UserBean> users = new ArrayList<UserBean>();
+                            users = admin.getAllUser();
+                            session.setAttribute("admin_all_users",users);
+                            String delete_user = request.getAttribute("delete_user");
+                            if (delete_user != null)
+                            {
+                                    String user_id = request.getParameter("user_id");
+                                    // Delete the user (Call it)
+                                    // First Check to make sure that user is not admin
+                                    if (admin.checkIfUserAdmin(user_id))
+                                {
+                                        // If they are admin, we can't delete that
+                                        String message = "You can't delete other admin";
+                                        session.setAttribute("error_message", message); 
+                                        rd = request.getRequestDispatcher("View/delete_error.jsp");
+                                        rd.forward(request, response);
+                                        return;
+                                }
+                            else {
+                                admin.deleteUserById(user_id);
+                                
+                            }
+                            }
+                            
+                     }
                 
-                
-                
-                
-                
-                
-                
-                
-                response.sendRedirect("View/manageUsers.jsp");
-            }
-            
-            
-        }
+                    }
+        */
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

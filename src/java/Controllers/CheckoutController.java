@@ -40,11 +40,6 @@ public class CheckoutController extends HttpServlet {
             
             // Need to have a model to hold the mailing session 
             // Get the user info 
-            UserBean user = (UserBean)request.getAttribute("user_info");
-            String user_id = user.getUserId();
-            CartBean cartBeans = new CartBean() ; 
-            ArrayList<BookCartBean> books = new ArrayList<BookCartBean> ();
-            books = cartBeans.fetchAllCartBooksByUserId(user_id);
             
             
             if (checkOut != null){

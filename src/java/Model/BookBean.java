@@ -39,12 +39,12 @@ public class BookBean implements Serializable {
     public void setQuantity(int quantity) { this.quantity = quantity; }
     
     //other
-    public BookBean findBookById(String id ) {
+    public boolean findBookById(String id ) {
         
         BookBean book = new BookBean();
         // Call to db 
         book.author = "Something here";
-        return book;
+        return true;
     }
     
     //returns arraylist filled with titles. 

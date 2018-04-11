@@ -39,6 +39,8 @@ public class RegisterController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            RequestDispatcher rd = null;
+
             String email = request.getParameter("email");
             String password_first = request.getParameter("password_first");
             String password_second = request.getParameter("password_second");
@@ -49,37 +51,38 @@ public class RegisterController extends HttpServlet {
             if (email.isEmpty() || password_first.isEmpty() || password_second.isEmpty()) {
                 String message = "One of the mandatory fields is empty. Please fill out again";
                 request.setAttribute("error_message", message);
-                
-                response.sendRedirect("View/register_error.jsp");
+                rd = request.getRequestDispatcher("View/register_error.jsp");
+                rd.forward(request, response);
                 return;
             }
             
             // Check if the user is entered the valid email 
-            if (validate(email) == false){
+            else if (validate(email) == false){
                 String message = "Invalid Email";
                 request.setAttribute("error_message", message);
-                response.sendRedirect("View/register_error.jsp");
+                rd = request.getRequestDispatcher("View/register_error.jsp");
+                rd.forward(request, response);
                 return;
             }
-
+            else {
             AccessBean reg = new AccessBean();
                  
             // if they have the same password
             if (password_first.equals(password_second)) {
                  reg.createUserWith (email, password_first, name);
                  // Navigate to login views
-                 RequestDispatcher rd=request.getRequestDispatcher("View/login.jsp");  
+                 rd=request.getRequestDispatcher("View/login.jsp");  
                  rd.forward(request, response);
                  return;
             }
             else {
                 String message = "Your password is not matched. Please check again";
                 request.setAttribute("error_message", message);
-                RequestDispatcher rd=request.getRequestDispatcher("View/register_error.jsp");  
+                rd=request.getRequestDispatcher("View/register_error.jsp");  
                 rd.forward(request, response);
                 return;
             }
-            
+            }
             
         }
     }

@@ -56,4 +56,12 @@ public class InventoryBean implements Serializable {
     public int number_of_quantity_with_book_id(int book_id) {
         return 0;
     }
+
+    public boolean validate_book_from_db_by_bookID(int book_id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public ArrayList<BookBean> findAllBooksByManagerId(String manager_id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
