@@ -41,6 +41,11 @@ public class CartBean implements Serializable {
     
     //other
     
+   public void clearCartForUserId( String user_id){
+       
+   }
+    
+    
     public double returnTotal(){
         try {
             // 1. Get a connection to database

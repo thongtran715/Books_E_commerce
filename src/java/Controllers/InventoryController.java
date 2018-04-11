@@ -52,16 +52,32 @@ public class InventoryController extends HttpServlet {
             session.setAttribute("Books_Info", books);
             
             RequestDispatcher rd = null;
-       
+            
           
             // When we are done with the data, we need to call the view to display it.
-            UserBean user = (UserBean)request.getAttribute("user_info");
+            UserBean user = (UserBean)session.getAttribute("user_info");
             
               // Check if the button add to cart is clicked
             String add_to_cart  = request.getParameter("add_to_cart");
+            if (add_to_cart == null){
+                     
+                 if (user.getUserType() == "2") {
+                response.sendRedirect("View/inventory_admin.jsp");
+                return;
+                    }
+            
+            else {
+                // Need to have inventory view to display
+                rd=request.getRequestDispatcher("View/inventory_user.jsp");  
+                rd.include(request, response);
+                return;
+            }
+            
+            }
             
             // If add to cart is pressed, 
-            if (add_to_cart != null) {
+            else if (add_to_cart != null) {
+             
                 // Get the book id and also user id 
                 int book_id = Integer.parseInt(request.getParameter("book_id"));
                 int userId  = Integer.parseInt(user.getUserId());
@@ -93,38 +109,29 @@ public class InventoryController extends HttpServlet {
                     rd.forward(request, response);
                     return;
                 }
-                
+                else {
                 // Once we found everything is ok, process to load it Cart bean and to the db 
                 // Save all the info inside the cartbean 
                 CartBean add_item_cart = new CartBean(quantity, book_id,userId);
                 if (add_item_cart.addCartToDb()) {
                     // If the cart is added successfully
-                    response.sendRedirect("View/add_cart_sucess.jsp");
+                     rd=request.getRequestDispatcher("View/inventory_user.jsp");  
+                     rd.include(request, response);
+                     return;
                 }
                 else {
                     String message = "Something wrong with your order";
                     session.setAttribute("error_message", message);
-                    response.sendRedirect("View/add_cart_fail.jsp");
+                    rd=request.getRequestDispatcher("View/add_to_cart_fail.jsp");  
+                    rd.include(request, response);
                     return;
+                    
+                    }
                 }
-                }
-            } 
-            
-            
-            
+            }             
+        }
            
-            
-            if (user.getUserType() == "2") {
-                response.sendRedirect("View/inventory_admin.jsp");
-                return;
-            }
-            else {
-            // Need to have inventory view to display
-            rd=request.getRequestDispatcher("View/inventory_user.jsp");  
-            rd.forward(request, response);
-            return;
-            }
-            
+       
          
         }
     }
@@ -144,14 +151,7 @@ public class InventoryController extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+  
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

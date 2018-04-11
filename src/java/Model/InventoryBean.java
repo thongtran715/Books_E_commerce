@@ -16,8 +16,20 @@ public class InventoryBean implements Serializable {
     }
     public ArrayList<BookBean> fetchAllBooks () {
         ArrayList<BookBean> bin = new ArrayList<BookBean>();
+        
+
+        
+        
+        
         return bin;
     }
+    
+    public BookBean fetchBookByBookId(String book_id) {
+        BookBean book = new BookBean();
+        return book;
+    }
+    
+    
     //getters
     public int getInven_id() { return inven_id; }
     public int getBook_id() { return book_id; }
@@ -64,4 +76,12 @@ public class InventoryBean implements Serializable {
     public ArrayList<BookBean> findAllBooksByManagerId(String manager_id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public void editInventoryByBookId(String book_id, String change_book_name, int change_quantity, String change_author, String change_title, String change_description, double change_price) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
+  
+
 }

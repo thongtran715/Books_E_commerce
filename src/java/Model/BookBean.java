@@ -46,6 +46,7 @@ public class BookBean implements Serializable {
         book.author = "Something here";
         return true;
     }
+
     
     //returns arraylist filled with titles. 
     public ArrayList<String> listTitle(){

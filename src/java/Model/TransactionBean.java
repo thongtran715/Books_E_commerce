@@ -58,5 +58,15 @@ public class TransactionBean implements Serializable{
         }
         catch (Exception e){ System.err.println(e); } 
     }
+
+    public void makeTransactionFromBooksId(ArrayList<Integer> books_id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public ArrayList<SaleBean> findAllSaleFromUserId(String store_manager_id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
     
 }

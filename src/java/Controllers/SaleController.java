@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Model.*;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
 /**
@@ -40,21 +41,20 @@ public class SaleController extends HttpServlet {
             HttpSession session = request.getSession();
             UserBean user = (UserBean)session.getAttribute("user_info");
             String store_manager_id = user.getUserId();
+            TransactionBean transactions = new TransactionBean();
             
-            
-            InventoryBean invenBean = new InventoryBean() ; 
-            
-            /*
+            //Uncomment this section to load the SaleBean
             ArrayList<SaleBean> sales = new ArrayList<SaleBean>();
-            sales = invenBean.findAllSaleFromUserId(store_manager_id);
+            sales = transactions.findAllSaleFromUserId(store_manager_id);
             session.setAttribute("sales_info", sales);
-            */
-            
-            
-            // Need to have Sale Model to fetch all the sale 
-            rd = request.getRequestDispatcher("View/sale.jsp");
-            rd.forward(request, response);
-             
+            if (sales.size() == 0){
+                rd = request.getRequestDispatcher("View/empty_sale.jsp");
+                rd.forward(request, response);
+            }
+            else {
+                rd = request.getRequestDispatcher("View/sale.jsp");
+                 rd.forward(request, response);
+            }
         }
     }
 

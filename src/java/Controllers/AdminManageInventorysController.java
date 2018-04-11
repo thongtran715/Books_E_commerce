@@ -8,6 +8,7 @@ package Controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +34,9 @@ public class AdminManageInventorysController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-                        /*
+              RequestDispatcher rd = null;
+     
+                /*
                     RequestDispatcher rd = null;
                     Uncomment this section when model and views are ready 
                     HttpSession session = request.getSession();
@@ -41,8 +44,10 @@ public class AdminManageInventorysController extends HttpServlet {
                     if (user != null) {
                     if (user.getUserType().equal("2") == false)
                     {   
-                            response.sendRedirect("View/inventory_user.jsp");
-                            return;
+                              rd=request.getRequestDispatcher("View/inventory_user.jsp");  
+                 rd.forward(request, response);
+            return;
+            
                     }
                      else{
                         
@@ -51,30 +56,23 @@ public class AdminManageInventorysController extends HttpServlet {
                             ArrayList<BookBean> books = new ArrayList<BookBean>();
                             books = admin.getAllBooks();
                             session.setAttribute("admin_all_books",books);
-                            String delete_book = request.getAttribute("delete_user");
-                            if (delete_user != null)
+                            String delete_book = request.getAttribute("delete_book");
+                            if (delete_book != null)
                             {
-                                    String user_id = request.getParameter("user_id");
+                                    String book_id = request.getParameter("user_id");
                                     // Delete the user (Call it)
-                                    // First Check to make sure that user is not admin
-                                    if (admin.checkIfUserAdmin(user_id))
-                                {
-                                        // If they are admin, we can't delete that
-                                        String message = "You can't delete other admin";
-                                        session.setAttribute("error_message", message); 
-                                        rd = request.getRequestDispatcher("View/delete_error.jsp");
-                                        rd.forward(request, response);
-                                        return;
-                                }
-                            else {
-                                admin.deleteUserById(user_id);
-                                
-                            }
+                                    admin.deleteBookByBookId(book_id);
                             }
                             
                      }
                 
                     }
+        else {
+               rd=request.getRequestDispatcher("View/inventory_user.jsp");  
+                 rd.forward(request, response);
+            return;
+            
+        }
         */
     }
 

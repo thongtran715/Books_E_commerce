@@ -9,8 +9,6 @@ package Model;
  *
  * @author ThongTran
  */
-public class BookCartBean {
-    public int getBook_id() {
-        return 0;
-    }
+public class SaleBean {
+    
 }

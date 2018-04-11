@@ -35,10 +35,8 @@ public class ManageStoreController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
             RequestDispatcher rd = null;
-
             UserBean user = (UserBean)session.getAttribute("user_info");
             if (user != null) {
                 if (user.getUserType() != "1") // It means that they are not a store manager
@@ -61,7 +59,10 @@ public class ManageStoreController extends HttpServlet {
                     
                     if (action_btn != null) {
                         if (action_btn.equals("edit_btn")){
-                            // Edit that inventory 
+                          
+                            // if they want to edit - Navigate to different controller
+                            rd = request.getRequestDispatcher("./EditManageStoreManager");
+                            rd.forward(request, response);
                         }
                         else if (action_btn.equals("delete_btn")){
                             // Delete that inventory
@@ -79,7 +80,7 @@ public class ManageStoreController extends HttpServlet {
                 return;
             }
             
-    }
+    
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

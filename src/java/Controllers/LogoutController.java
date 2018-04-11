@@ -1,29 +1,26 @@
-package Controllers;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.RequestDispatcher;  
-import Model.*;
 import javax.servlet.http.HttpSession;
-
 
 /**
  *
  * @author ThongTran
  */
-@WebServlet(urlPatterns = {"/LogInController"})
-public class LogInController extends HttpServlet {
+@WebServlet(name = "LogoutController", urlPatterns = {"/LogoutController"})
+public class LogoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,60 +35,18 @@ public class LogInController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */     
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            RequestDispatcher rd = null;
-
-            // Check if the email and password is empty 
-            if (email.isEmpty () || password.isEmpty()) {
-                String message = "Please fill in Email and Password";
-                request.setAttribute("error_message", message);
-                rd=request.getRequestDispatcher("View/login_error.jsp");  
-                 rd.forward(request, response);
-                 return;
-            }
-            
-            else {
-            AccessBean log = new AccessBean();
-            // Set the user email
-            log.emailUserName(email);
-            // It means we first check if the user successfully logged in the system
-            if (log.logInToDb(password)) {
-                // Save the session 
                 
-                UserBean user = new UserBean() ;
-                user = log.fetchUserInfo () ;
-                
-                user.setType("1");
-                
+                RequestDispatcher rd = null;
                 HttpSession session = request.getSession();
-                session.setAttribute("user_info", user);     
-                // Navigate to different view 
-                 if ("0".equals(user.getUserType())) // It means the user is logged in is the normal user
-                 {
-                 rd=request.getRequestDispatcher("InventoryController");  
-                 }
-                 else if ("1".equals(user.getUserType())){ // It means the user is logged in is the store manager
-                   rd=request.getRequestDispatcher("InventoryController");  
-                 }
-                 else if ("2".equals(user.getUserType())){
-                     rd=request.getRequestDispatcher("AdminController");  
-                 }
+                 session.removeAttribute("user_info");
+                 rd=request.getRequestDispatcher("View/login.jsp");  
                  rd.forward(request, response);
-            }
-            else {
-                 String message = "Your email and password is not found. Please check again";
-                 request.setAttribute("error_message", message);
-                 rd=request.getRequestDispatcher("View/login_error.jsp");  
-                 rd.forward(request, response);
-            }
+                
             
             
         }
     }
-    }
-      
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

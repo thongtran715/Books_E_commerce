@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Model.*;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpSession;
 /**
  *
  * @author ThongTran
@@ -34,24 +36,39 @@ public class CheckoutController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            RequestDispatcher rd = null;
             /* TODO output your page here. You may use following sample code. */
-           
+            
             String checkOut = (String)request.getParameter("checkOut");
             
-            // Need to have a model to hold the mailing session 
-            // Get the user info 
+            if (checkOut != null)
+            {
+            HttpSession session = request.getSession();
+            UserBean user = (UserBean)session.getAttribute("user_info");
+            ArrayList<BookCartBean> books = (ArrayList<BookCartBean>)(session.getAttribute("cart_info"));
             
+            // Get all the book id and stored in type int
+            ArrayList<Integer> books_id = new ArrayList<>();
             
-            if (checkOut != null){
-                // Clear the Cart controller 
-                
+            for ( int i = 0 ; i < books.size(); ++i){
+                books_id.add(books.get(i).getBook_id());
+            }
+            TransactionBean trans = new TransactionBean() ; 
+            
+            // if they checkout, push every book id in transaction 
+            trans.makeTransactionFromBooksId(books_id);
+            
+            CartBean cart = new CartBean();
+            // Remove Attribute
+            session.removeAttribute("cart_info");
+            cart.clearCartForUserId(user.getUserId());
+              rd=request.getRequestDispatcher("View/inventory_user.jsp");  
+              rd.include(request, response);
+              
+                return;
             }
             
-            
-            
-            
-            
-        }
+        }   
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -47,6 +47,7 @@ public class RegisterController extends HttpServlet {
             String name = request.getParameter("name");
             
             
+            
             // Check if any of these views are actually empty
             if (email.isEmpty() || password_first.isEmpty() || password_second.isEmpty()) {
                 String message = "One of the mandatory fields is empty. Please fill out again";
