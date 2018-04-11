@@ -59,11 +59,8 @@ public class LogInController extends HttpServlet {
             // It means we first check if the user successfully logged in the system
             if (user.checkPassword(password)) {
                 // Save the session 
-                
+                //ad
                 user.fetchUserInfo () ;
-                
-               
-                
                 HttpSession session = request.getSession();
                 session.setAttribute("user_info", user);     
                 // Navigate to different view 
