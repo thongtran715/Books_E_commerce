@@ -47,16 +47,11 @@ public class CheckoutController extends HttpServlet {
             UserBean user = (UserBean)session.getAttribute("user_info");
             ArrayList<BookCartBean> books = (ArrayList<BookCartBean>)(session.getAttribute("cart_info"));
             
-            // Get all the book id and stored in type int
-            ArrayList<Integer> books_id = new ArrayList<>();
-            
-            for ( int i = 0 ; i < books.size(); ++i){
-                books_id.add(books.get(i).getBook_id());
-            }
+           
             TransactionBean trans = new TransactionBean() ; 
             
             // if they checkout, push every book id in transaction 
-            trans.makeTransactionFromBooksId(books_id);
+            trans.saleCommit();
             
             CartBean cart = new CartBean();
             // Remove Attribute

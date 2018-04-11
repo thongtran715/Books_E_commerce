@@ -56,12 +56,19 @@ public class EditManageStoreManager extends HttpServlet {
             String change_description = request.getParameter("change_description");
             double change_price = Double.parseDouble(request.getParameter("change_price"));
             
+            String cancel_btn = request.getParameter("cancel_btn");
+            if (cancel_btn == null)
+            {
             // Change the items 
             invenBean.editInventoryByBookId(book_id, change_book_name, change_quantity,change_author,change_title,change_description,change_price);
             
             rd = request.getRequestDispatcher("View/edit_item_sucess.jsp");
             rd.forward(request, response);
-            
+            }
+            else {
+            rd = request.getRequestDispatcher("View/store_manager.jsp");
+            rd.forward(request, response);
+            }
         }
     }
 

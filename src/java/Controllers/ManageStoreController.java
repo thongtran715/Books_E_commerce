@@ -66,6 +66,9 @@ public class ManageStoreController extends HttpServlet {
                         }
                         else if (action_btn.equals("delete_btn")){
                             // Delete that inventory
+                            // if they delete, we need to get the book id 
+                            String book_id = request.getParameter("book_delete_id");
+                            invenBean.deleteInventoryItemByBookID(book_id);
                         }
                     }
                     

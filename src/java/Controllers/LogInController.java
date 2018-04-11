@@ -53,17 +53,16 @@ public class LogInController extends HttpServlet {
             }
             
             else {
-            AccessBean log = new AccessBean();
+            UserBean user = new UserBean();
             // Set the user email
-            log.emailUserName(email);
+            user.setEmail(email);
             // It means we first check if the user successfully logged in the system
-            if (log.logInToDb(password)) {
+            if (user.checkPassword(password)) {
                 // Save the session 
                 
-                UserBean user = new UserBean() ;
-                user = log.fetchUserInfo () ;
+                user.fetchUserInfo () ;
                 
-                user.setType("1");
+               
                 
                 HttpSession session = request.getSession();
                 session.setAttribute("user_info", user);     

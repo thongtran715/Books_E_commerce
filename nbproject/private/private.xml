@@ -3,14 +3,41 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Model/InventoryBean.java</file>
             <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Controllers/CartController.java</file>
-            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Controllers/LogInController.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Model/AuthorBean.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Model/GenreBean.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/web/View/inventory_user.jsp</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/web/View/checkout.jsp</file>
             <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Model/AccessBean.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Controllers/AdminManageUserController.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/web/View/homepage.jsp</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Controllers/CheckoutController.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Controllers/SaleController.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Controllers/ManageStoreController.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/web/View/inventory_admin.jsp</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Controllers/EditManageStoreManager.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Controllers/LogInController.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Model/BookCartBean.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Controllers/BookController.java</file>
             <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Controllers/RegisterController.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/build/web/WEB-INF/glassfish-web.xml</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Model/BookGenreBean.java</file>
             <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Controllers/InventoryController.java</file>
-            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Model/BookBean.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/web/View/login_error.jsp</file>
             <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Controllers/HistoryController.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Controllers/LogoutController.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Model/InventoryBean.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Model/UserBean.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/web/View/register_error.jsp</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Model/BookBean.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/web/View/login.jsp</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/web/index.html</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/web/View/index.html</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Model/CartBean.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Model/TransactionBean.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/web/View/register.jsp</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Model/SaleBean.java</file>
+            <file>file:/Users/ThongTran/Desktop/Books_E_commerce/src/java/Controllers/AdminManageInventorysController.java</file>
         </group>
     </open-files>
 </project-private>

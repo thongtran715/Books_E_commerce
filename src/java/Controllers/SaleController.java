@@ -47,15 +47,22 @@ public class SaleController extends HttpServlet {
             ArrayList<SaleBean> sales = new ArrayList<SaleBean>();
             sales = transactions.findAllSaleFromUserId(store_manager_id);
             session.setAttribute("sales_info", sales);
+            
+            if (user == null){
+                response.sendRedirect("View/inventory_user.jsp");
+            }
+            else {
             if (sales.size() == 0){
                 rd = request.getRequestDispatcher("View/empty_sale.jsp");
                 rd.forward(request, response);
             }
             else {
-                rd = request.getRequestDispatcher("View/sale.jsp");
+                 rd = request.getRequestDispatcher("View/sale.jsp");
                  rd.forward(request, response);
+                 }
             }
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

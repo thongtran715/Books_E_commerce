@@ -66,7 +66,7 @@ public class RegisterController extends HttpServlet {
                 return;
             }
             else {
-            AccessBean reg = new AccessBean();
+            UserBean reg = new UserBean();
                  
             // if they have the same password
             if (password_first.equals(password_second)) {
