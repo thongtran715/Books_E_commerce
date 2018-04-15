@@ -14,7 +14,10 @@
             <div id="header">
                 <div id="widgetBar">
 
-                    <div class="headerWidget"></div>
+                    <div class="headerWidget">
+                        <a href="./cart.jsp">Logout</a>
+                    </div>
+                  
 
                     <div class="headerWidget">
                         <a href="./inventory_user.jsp">Catalog</a>
@@ -23,6 +26,8 @@
                     <div class="headerWidget">
                         <a href="./cart.jsp">Cart</a>
                     </div>
+                    
+                   
 
                 </div>
 
@@ -35,31 +40,13 @@
 
             <div id="singleColumn">
 
-                <p id="confirmationText">
-                    [ text ]
+                <p id="confirmationText" >
+                    Thank you for your purchase!
                     <br><br>
-                    [ order reference number ]
+                    [Come back soon!]
                 </p>
 
-                <div class="summaryColumn" >
 
-                    <table id="orderSummaryTable" class="detailsTable" >
-                        <tr class="header">
-                            <th style="padding:10px">[ order summary table ]</th>
-                        </tr>
-                    </table>
-
-                </div>
-
-                <div class="summaryColumn" >
-
-                    <table id="deliveryAddressTable" class="detailsTable">
-                        <tr class="header">
-                            <th style="padding:10px">[ customer details ]</th>
-                        </tr>
-                    </table>
-                </div>
-            </div>
 
             <div id="footer">
                 <hr>

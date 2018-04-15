@@ -28,17 +28,12 @@
                 <br/>
                 <br/>
                     <div class="container">
-                       <form action ="LogInController" method="post">
-                        Enter Email<input type="text" name="email"> <br/>
-                        Enter Password:  <input type="text" name="password"> <br/>
-                        <input type="submit" value="Login">
-                       </form>
+                        <h1> Login Failed! Try again.</h1>
                     </div>
                         <a href="./register.jsp">New User? Register here!</a>
                         <br/>
                         <br/>
                         <br/>
-                    
             </div>
 
             <div id="footer">

@@ -19,10 +19,10 @@
                     <a href="./CartController">Cart</a>
                     </div>
                     <div class="headerWidget">
-                       <a href="./login.jsp">Login</a>
+                       <a href="./LogoutController">Logout</a>
                     </div>
                     <div class="headerWidget">
-                         <a href="./CheckoutController">Checkout</a>
+                         <a href="./homepage.jsp">Homepage</a>
                     </div>
                 </div>
                    <!--change this to redirect directly to index.html -->
@@ -32,44 +32,48 @@
                 <img src="./Images/logo.png" id="logoText" alt="The Bookstore">
             </div>
 
+   
             <div id ="singleColumn">
                 <p id="categoryTitle">[Catalog]</p>
              
                     <%
-                        //create BookBean object that holds all the books and information
-                        ArrayList<BookBean> books = (ArrayList)session.getAttribute("Books_Info");
+                        //create BookBean object that has all books and book informations
+                        ArrayList<BookBean> books = (ArrayList)session.getAttribute("book_edit");
                         out.print("<table border='1', align='center'>");
-
                         //table headers
                         out.println("<tr>");
-                        out.print("<th> Title</th>");
+                        out.print("<th> Title dsfsdfs </th>");
                         out.print("<th> Author</th>");
                         out.print("<th> Price</th>");
-                        out.print("<th> Quantity</th>");                                    
+                        out.print("<th> Storage Count</th>"); 
+                        //for loop when connected to iterate through the object books
+                //      for(int i = 0; i <books.size();i++){                             
                         out.println("</tr>");
                         //example data
-                        out.println("<tr>");
                         out.print("<td>Title_example1</td>");
                         out.print("<td>Author_example1</td>");
                         out.print("<td>Price_example1</td>");
-                        //for loop for when connected to DB
-                //      for(int i = 0; i <books.size();i++){
-
-                        //these 3 lines will replace above 3 example lines
+                        //code that replaces 3 above lines when connected
                 //      out.print("<td>" + books.get(i).getTitle() + "</td>");
-                  //    out.print("<td>" + books.get(i).getAuthor() + "</td>");  
-                    //  out.print("<td>" + books.get(i).getPrice() + "</td>");
-                    
-                        //sends quantity information and book_id of which book to add to user cart
-                                out.print("<td> <form action='InventoryController' method='get'>"
-                                + "<input type='text' name='quantity'>"
-                                + "<input type='submit' value='Add to Cart'"
+                //      out.print("<td>" + books.get(i).getAuthor() + "</td>");  
+                //      out.print("<td>" + books.get(i).getPrice() + "</td>");
+                
+                        //buttons to send to ManageStoreController
+                        //Sends quantity with book id to change quantity
+                        out.print("<td> <form action='ManageStoreController' method='get'>"
+                                + "<input type='text' name='newQuantity' placeholder='books.get(i).getQuantity'>"
+                                + "<input type='submit' value='Change Quantity'"
                                 + "</form></td>");
-                        out.print("<td> <form action='InventoryController' method='get'>"
+                        out.print("<td> <form action='ManageStoreController' method='get'>"
                                 + "<input type='hidden' value='books.get(i).getBook_id()'name='book_id'>"
                                 + "</form></td>");
-                        out.println("</tr>");
+                        //sends book_id to ManageStoreController to delete book
+                        out.print("<td> <form action='ManageStoreController' method='get'>"
+                                + "<input type='hidden' value='booksCart.get(i).getBook_id()'name='book_id'>"
+                                + "<input type='submit' value='Remove'"
+                                + "</form></td>");
                         
+                        out.println("</tr>");    
                       //for loop curly bracket
                       //  }
                         out.println("</table>");

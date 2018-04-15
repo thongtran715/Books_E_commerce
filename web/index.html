@@ -6,20 +6,70 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Log In page</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Welcome to the Bookstore</title>
+        <link rel="stylesheet" type="text/css" href="View/css/bookstore.css">
     </head>
     <body>
-        
-        <form action="LogInController" method="post">
-            <input type="text" name="email">
-            <input type="text" name="password">
-            <input type="submit" value="Log In">
+        <div id="main">
             
-        </form>
-        
-        
+            <div id="header">
+                <div id="widgetBar">
+
+                    <div class="headerWidget">
+                        <!--change this to redirect to controller -->
+                        <a href="./cart.jsp">Cart</a>
+                    </div>
+
+                    <div class="headerWidget">
+                        <!--can link directly to login page -->
+                        <a href="./View/login.jsp">Login</a>
+                    </div>
+
+                </div>
+                <!--can link directly to login -->
+                <a href="#">
+                    <img src="./View/Images/download.jpg" id="logo" alt="Bookstore">
+                </a>
+                    <!--should not have any src -->
+                <img src="./View/Images/logo.png" id="logoText" alt="Bookstore Text">
+            </div>
+            
+            <div id ="indexLeftColumn">
+
+               Direct Links:
+               <br/>
+                <a href="View/cart.jsp">Cart</a>
+                <br/>
+                <a href="View/checkout.jsp">Checkout</a>
+                 <br/>
+                <a href="View/confirmation.jsp">Confirmation</a>
+                <br/>
+                <a href="View/homepage.jsp">Homepage</a>
+                <br/>
+                <a href="View/inventory_admin.jsp">Inventory Admin</a>
+                 <br/>
+                <a href="View/inventory_store_manager.jsp">Inventory Store Manager</a>
+                 <br/>
+                <a href="View/inventory_user.jsp">Inventory User</a>
+                 <br/>
+                <a href="View/login.jsp">Login</a>
+                 <br/>
+                <a href="View/login_error.jsp">Login Error</a>
+                 <br/>
+                <a href="View/register.jsp">Register</a>
+                 <br/>
+                <a href="View/register_error.jsp">Register Error</a>
+
+            </div>
+            
+                <div id ="indexRightColumn">
+                    right column
+                </div>
+            <div id="footer">
+                footer
+            </div
+        </div>
         
         
     </body>

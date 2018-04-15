@@ -22,10 +22,10 @@
                 </div>
 
                 <a href="./homepage.jsp">
-                    <img src="#" id="logo" alt="Bookstore">
+                    <img src="./Images/download.jpg" id="logo" alt="Bookstore">
                 </a>
 
-                <img src="#" id="logoText" alt="The Bookstore">
+                <img src="./Images/logo.png" id="logoText" alt="The Bookstore">
             </div>
 
             <div id="centerColumn">
@@ -33,14 +33,15 @@
                 <br/>
                 <br/>
                     <div class="container">
-                       <form action ="./LoginController.java" method="get">
-                        Enter Username:<input type="text" name="username"> <br/>
-                        Enter Password:  <input type="text" name="password"> <br/>
-                        Enter Email:  <input type="text" name="email"> <br/>
-                        <input type="submit" value="Login">
+                       <form action ="../RegisterController" method="get">
+                        Enter Email<input type="text" name="email"> <br/>
+                        Enter Password:  <input type="text" name="password_first"> <br/>
+                        Re-enter Password:  <input type="text" name="password_second"> <br/>
+                        Enter Your Name<input type="text" name="name"> <br/>
+                        <input type="submit" value="Register">
                        </form>
                     </div>
-                        <a href="./register.jsp">New User? Register here!</a>
+                        
                         <br/>
                         <br/>
                         <br/>
