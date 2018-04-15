@@ -19,28 +19,43 @@
                 <div id="widgetBar">
 
                     <div class="headerWidget">
+                        
+                        <%--change this to redirect to controller --%>
                         <a href="./cart.jsp">Cart</a>
                     </div>
 
                     <div class="headerWidget">
+                        <%-- should redirect directly to login.jsp without goin to controller --%>
                         <a href="./login.jsp">Login</a>
                     </div>
 
                 </div>
 
                 <a href="#">
-                    <img src="#" id="logo" alt="Bookstore">
+                    <img src="./Images/download.jpg" id="logo" alt="Bookstore">
                 </a>
 
-                <img src="#" id="logoText" alt="Bookstore Text">
+                <img src="./Images/logo.png" id="logoText" alt="Bookstore Text">
             </div>
             
             <div id ="indexLeftColumn">
-               <a href="./inventory_user.jsp">Catalog</a>
+                <h4>Catalog</h4>
+                <a href="InventoryController">
+                    <img src="./Images/catalog.png" id="logo" align="right" alt="catalog" style="width:300px; height:300px;" >
+                </a>
             </div>
             
                 <div id ="indexRightColumn">
-                    right column
+                    <h2>Description</h2>
+                    This is a book store web application for Web Programming.
+                    The project uses MVC framework using MySQL as the database.
+                    <br/>
+                    
+                    Our group consist of:<br/>
+                    Models:<br/>
+                    Views:<br/>
+                    Controllers:<br/>
+
                 </div>
             <div id="footer">
                 footer
