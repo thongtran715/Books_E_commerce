@@ -58,7 +58,10 @@ public class InventoryBean implements Serializable {
                 Double price = res.getDouble("price");
                 String des = res.getString("description");
                 int quantity = res.getInt("quantity");
-                books = new BookBean(title, author, price, des, quantity);
+                int book_id = res.getInt("book_id");
+                int seller1 = res.getInt("seller_id");
+
+                books = new BookBean(book_id, title, author, price, des, quantity,seller1);
             }     
         }
         catch (Exception e){ System.err.println(e); }
@@ -95,15 +98,24 @@ public class InventoryBean implements Serializable {
             // 2. Create a statement
             Statement stmt = conn.createStatement();
             // 3. Execute the SQL query
-            ResultSet res = stmt.executeQuery("select * from Book");
+            ResultSet res = stmt.executeQuery("select * from Book, AUTHOR where Book.author = AUTHOR.author_id");
             // 4. Process the result set
             while(res.next()){
                 String title = res.getString("title");
-                String author = res.getString("author");
+                
+                String author = res.getString("author.author");
+//                ResultSet res_author = stmt.executeQuery("select author from AUTHOR where author_id='" + author_id + "'" );
+//                String author = "";
+//                while(res_author.next()){
+//                    author = res_author.getString("author");
+//                }
                 Double price = res.getDouble("price");
                 String des = res.getString("description");
                 int quantity = res.getInt("quantity");
-                BookBean aBook = new BookBean(title,author,price,des,quantity);
+                int book_id = res.getInt("book_id");
+                int seller1 = res.getInt("seller_id");
+
+                BookBean aBook = new BookBean(book_id, title,author,price,des,quantity,seller1);
                 books.add(aBook);
             }     
         }
@@ -120,15 +132,18 @@ public class InventoryBean implements Serializable {
             // 2. Create a statement
             Statement stmt = conn.createStatement();
             // 3. Execute the SQL query
-            ResultSet res = stmt.executeQuery("select * from Book where user_id = '"+manager_id+"'");
+            ResultSet res = stmt.executeQuery("select * from Book, author where book.author = author.author_id AND seller_id = '"+manager_id+"'");
             // 4. Process the result set
             while(res.next()){
                 String title = res.getString("title");
-                String author = res.getString("author");
+                String author = res.getString("author.author");
                 Double price = res.getDouble("price");
                 String des = res.getString("description");
                 int quantity = res.getInt("quantity");
-                BookBean aBook = new BookBean(title,author,price,des,quantity);
+                int book_id = res.getInt("book_id");
+                int seller1 = res.getInt("seller_id");
+
+                BookBean aBook = new BookBean(book_id, title,author,price,des,quantity,seller1);
                 books.add(aBook);
             }     
         }
@@ -136,7 +151,7 @@ public class InventoryBean implements Serializable {
         return books;
     }
     
-    public void deleteInventoryItemByBookID(String book_id){
+    public void deleteInventoryItemByBookID(int book_id){
         try {
             // 1. Get a connection to database
             Class.forName("com.mysql.jdbc.Driver");

@@ -38,7 +38,12 @@ public class ManageStoreController extends HttpServlet {
             HttpSession session = request.getSession();
             RequestDispatcher rd = null;
             UserBean user = (UserBean)session.getAttribute("user_info");
-            if (user != null) {
+            
+                if (user == null){
+                    response.sendRedirect("View/login.jsp");
+                    
+                }
+                else {
                 if (user.getUserType() != 1) // It means that they are not a store manager
                 {
                     rd=request.getRequestDispatcher("View/inventory_user.jsp");  
@@ -49,40 +54,65 @@ public class ManageStoreController extends HttpServlet {
                     // Now they are manager
                     InventoryBean invenBean = new InventoryBean() ; 
                     ArrayList<BookBean> booksManager = new ArrayList<BookBean>(); 
-                    int manager_id = user.getUserId();
+                    int manager_id = user.getUser_id();
                     booksManager = invenBean.findAllBooksByManagerId(manager_id);
-                    
+                    CartBean cart = new CartBean();
+
                     session.setAttribute("books_Manager_info", booksManager);
                     
                     // Check if any interaction from the store manager to the page
-                    String action_btn = request.getParameter("action");
-                    
+                    String action_btn = request.getParameter("Modify_Items");
+                    if (action_btn == null){
+                        rd=request.getRequestDispatcher("View/StoreManager.jsp");  
+                        rd.forward(request, response);
+                        return;
+                    }
                     if (action_btn != null) {
-                        if (action_btn.equals("edit_btn")){
-                          
-                            // if they want to edit - Navigate to different controller
-                            rd = request.getRequestDispatcher("./EditManageStoreManager");
-                            rd.forward(request, response);
+                            int book_id = Integer.parseInt(request.getParameter("book_id"));
+                            int seller_id = user.getUser_id();
+                            BookBean book = new BookBean() ; 
+                        if (action_btn.equals("edit_quantity")){
+                          int quantity = Integer.parseInt(request.getParameter("quantity"));
+                            book.updateBookQuantityByStoreManager(book_id, seller_id, quantity);
+                            response.sendRedirect("ManageStoreController");
                         }
-                        else if (action_btn.equals("delete_btn")){
+                        else if (action_btn.equals("edit_title")){
+                            String title = (String)request.getParameter("title");
+                             book.updateBookTitleByStoreManager(book_id, seller_id, title);
+                                                         response.sendRedirect("ManageStoreController");
+
+                        }
+                        else if (action_btn.equals("edit_description")){
+                            String desc = (String)request.getParameter("description");
+                            book.updateBookDescByStoreManager(book_id, seller_id, desc);
+                            response.sendRedirect("ManageStoreController");
+
+                        }
+                        else if (action_btn.equals("edit_price")){
+                           double price = (Double.parseDouble(request.getParameter("price")));
+                           book.updateBookPriceByStoreManager(book_id, seller_id, price);
+                            response.sendRedirect("ManageStoreController");
+
+                        }
+                        else if (action_btn.equals("edit_author")){
+                            String author = (String)request.getParameter("author");
+                            book.updateBookAuthorByStoreManager(book_id, seller_id, author);
+                             response.sendRedirect("ManageStoreController");
+    
+                        }
+                        
+                        else if (action_btn.equals("delete")){
                             // Delete that inventory
                             // if they delete, we need to get the book id 
-                            String book_id = request.getParameter("book_delete_id");
                             invenBean.deleteInventoryItemByBookID(book_id);
+                            response.sendRedirect("ManageStoreController");
                         }
                     }
                     
-                    rd=request.getRequestDispatcher("View/store_manager.jsp");  
-                    rd.forward(request, response);
-                    return;
                 }
-            }
-            else {
-                rd = request.getRequestDispatcher("View/login.jsp");
-                rd.forward(request,response);
-                return;
-            }
+                }
             
+     
     
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

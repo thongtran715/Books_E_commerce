@@ -78,6 +78,17 @@ public class InventoryController extends HttpServlet {
             }
             
             }
+            else if (add_to_cart != null){
+                // Get the book id and also user id 
+                int book_id = Integer.parseInt(request.getParameter("book_id"));
+                int userId  = user.getUser_id();
+                CartBean add_item_cart = new CartBean (book_id, userId);
+                add_item_cart.addCartToDB();
+                response.sendRedirect("InventoryController");
+                return;             
+            }
+            
+            
             /*
             // If add to cart is pressed, 
             else if (add_to_cart != null) {

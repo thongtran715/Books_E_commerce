@@ -89,15 +89,13 @@ public class UserBean implements Serializable{
                 this.email = res.getString("email");
                 this.typeofuser = res.getInt("typeofuser");
                 this.user_id = res.getInt("user_id");
+                this.name = res.getString("name");
                 System.out.println("user: " + res.getInt("user_id") + " type of user: " + res.getInt("typeofuser"));
                 }
            }
           catch (Exception e){ System.err.println(e); }
     }
-    
-    //return user_id
-    public int getUserId(){
-        int userid = 0;
+        public void fetchUserInfoByID(int userid) {
         try {
                 // 1. Get a connection to database
             Class.forName("com.mysql.jdbc.Driver");
@@ -105,13 +103,36 @@ public class UserBean implements Serializable{
                 // 2. Create a statement
             Statement stmt = conn.createStatement();            
                 // 3. Execute the SQL query
-            ResultSet res = stmt.executeQuery("SELECT user_id FROM USER");            
+            ResultSet res = stmt.executeQuery("SELECT * FROM USER WHERE user_id = '" +userid+"'");            
                 // 4. Process the result set
-            userid = res.getInt("user_id");            
+                while(res.next()){
+                this.email = res.getString("email");
+                this.typeofuser = res.getInt("typeofuser");
+                this.user_id = res.getInt("user_id");
+                this.name = res.getString("name");
+                System.out.println("user: " + res.getInt("user_id") + " type of user: " + res.getInt("typeofuser"));
+                }
            }
           catch (Exception e){ System.err.println(e); }
-        return userid;
     }
+    
+    //return user_id
+//    public int getUserId(){
+//        int userid = 0;
+//        try {
+//                // 1. Get a connection to database
+//            Class.forName("com.mysql.jdbc.Driver");
+//            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/Project2", "root", "root");           
+//                // 2. Create a statement
+//            Statement stmt = conn.createStatement();            
+//                // 3. Execute the SQL query
+//            ResultSet res = stmt.executeQuery("SELECT user_id FROM USER");            
+//                // 4. Process the result set
+//            userid = res.getInt("user_id");            
+//           }
+//          catch (Exception e){ System.err.println(e); }
+//        return userid;
+//    }
     
 //    public int getUserType(){
 //        int usertype = 0;

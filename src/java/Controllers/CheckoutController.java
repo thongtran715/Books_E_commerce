@@ -38,31 +38,38 @@ public class CheckoutController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             RequestDispatcher rd = null;
             /* TODO output your page here. You may use following sample code. */
-            
-            String checkOut = (String)request.getParameter("checkOut");
-            
-            if (checkOut != null)
-            {
             HttpSession session = request.getSession();
             UserBean user = (UserBean)session.getAttribute("user_info");
             ArrayList<BookBean> books = (ArrayList<BookBean>)(session.getAttribute("cart_info"));
             
+            String checkOut = (String)request.getParameter("checkOut");
+            if (user == null){
+                response.sendRedirect("View/login.jsp");
+            }
+            else {
+            if (checkOut != null)
+            {
+         
            
             TransactionBean trans = new TransactionBean() ; 
             
             // if they checkout, push every book id in transaction 
-            trans.saleCommit();
-            
+            trans.checkOutCart(user.getUser_id());
+            trans.updateQuantity();
             CartBean cart = new CartBean();
             // Remove Attribute
+            session.setAttribute("confirmation", books);
             session.removeAttribute("cart_info");
-            cart.clearCartForUserId(user.getUserId());
-              rd=request.getRequestDispatcher("View/inventory_user.jsp");  
-              rd.include(request, response);
-              
-                return;
+            cart.clearCartForUserId(user.getUser_id());
+            rd = request.getRequestDispatcher("View/confirmation.jsp");
+            rd.forward(request,response);
             }
-            
+            else {
+                    rd = request.getRequestDispatcher("View/checkout.jsp");
+                    rd.forward(request, response);
+                    return;
+            }
+            }
         }   
     }
 

@@ -43,25 +43,35 @@ public class CartController extends HttpServlet {
             HttpSession session = request.getSession();
             UserBean user = (UserBean)session.getAttribute("user_info");
             
-            if (user != null) {
-            int user_id = user.getUserId();
+            
+            if (user == null){
+                response.sendRedirect("View/login.jsp");
+            }
+            else {
+            
+            int user_id = user.getUser_id();
             
             CartBean cart = new CartBean();
-            
-            ArrayList<BookBean>  booksCart = new ArrayList<BookBean>();
-            booksCart = cart.fetchAllCartBooksByUserId(user_id);
-            
-            session.setAttribute("cart_info", booksCart);
+            ArrayList<BookBean> books = new ArrayList<BookBean>();
+            books = cart.fetchAllCartBooksByUserId(user_id);
+            session.setAttribute("cart_info", books);
             
             // Check if the edit button is checked, and checked if the delete button is clicked 
             String modify_btn = request.getParameter("Modify_Items");
-            int book_id = Integer.parseInt(request.getParameter("book_id"));
-
-            if (modify_btn != null) {
+            if (modify_btn == null) {
+                
+                    rd = request.getRequestDispatcher("View/cart.jsp");
+                    rd.forward(request, response);
+                    return;
+            }
+            else {
+                
             if (modify_btn.equals("edit")) {
+               int book_id = Integer.parseInt(request.getParameter("book_id"));
+
                 // First we need to find if this item is existed inside the user db 
                 // Get the number of quantity
-                int quantity = Integer.parseInt(request.getParameter("edit_quantity"));
+                int quantity = Integer.parseInt(request.getParameter("quantity"));
                 // Check if the quantity from db is good 
                 InventoryBean invenBean = new InventoryBean() ; 
                 int quantity_limit = invenBean.number_of_quantity_with_book_id(book_id);
@@ -74,28 +84,26 @@ public class CartController extends HttpServlet {
                 }
                 // If everything is good then call the cart bean to update the storage
                 cart.update_quantity_by (user_id, book_id, quantity);
+                response.sendRedirect("CartController");
+
                 return;
             }
-                else if (modify_btn.equals("delete")) {
+                
+                if (modify_btn.equals("delete")) {
+                int book_id = Integer.parseInt(request.getParameter("book_id"));
+
                     cart.delete_cart(user_id, book_id);
-                return;
+                    response.sendRedirect("CartController");
+                    return;
                 }
             }
             
             // Once getting the user name . We will call the cart to fetch all the 
             // seperate the type for the user
             // Need to have cart view for normal user
+                
             
-            if ("2".equals(user.getUserType()) == false) {
-                    rd = request.getRequestDispatcher("View/cart.jsp");
-                    rd.forward(request, response);
-                    return;
-            }
-            return;
-            }
-            else {
-                response.sendRedirect("View/register.jsp");
-                return;
+            
             }
           
         }

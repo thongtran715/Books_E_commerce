@@ -42,28 +42,13 @@ public class HistoryController extends HttpServlet {
                 UserBean user = (UserBean)request.getAttribute("user_info");
                 TransactionBean trans = new TransactionBean() ; 
                 ArrayList<BookBean> books_history_purchased = new ArrayList<BookBean>();
-                books_history_purchased = trans.fetchAllBooksHistoryByUserId(user.getUserId());
-                if (books_history_purchased.size() == 0){
-                    // if this not has been in db 
-                    String message = "Your history transaction is empty";
-                    session.setAttribute("error_message", message);
-                    rd=request.getRequestDispatcher("View/history_error.jsp");  
-                    rd.forward(request, response);
-                    return;
-                }
+                books_history_purchased = trans.fetchAllBooksHistoryByUserId(user.getUser_id());
                 
                 session.setAttribute("books_history", books_history_purchased);
             
-
-               // Always check if the user is still logged in 
-               if (user != null){
-                   rd=request.getRequestDispatcher("View/history.jsp");  
-                   rd.forward(request, response);
-               }
-               else {
-               // Need to have History View 
-               response.sendRedirect("View/login.jsp");
-               }
+               rd = request.getRequestDispatcher("View/history_error.jsp");
+               rd.forward(request, response);
+                
         }
     }
 

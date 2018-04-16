@@ -6,6 +6,7 @@ package Controllers;
  * and open the template in the editor.
  */
 
+import Model.UserBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -14,7 +15,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
+import Model.*;
+import java.util.ArrayList;
 /**
  *
  * @author ThongTran
@@ -36,45 +39,42 @@ public class AdminManageInventorysController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
               RequestDispatcher rd = null;
      
-                /*
-                    RequestDispatcher rd = null;
-                    Uncomment this section when model and views are ready 
+               
+                    //Uncomment this section when model and views are ready 
                     HttpSession session = request.getSession();
                     UserBean user = (UserBean)session.getAttribute("user_info");
-                    if (user != null) {
-                    if (user.getUserType().equal("2") == false)
-                    {   
-                              rd=request.getRequestDispatcher("View/inventory_user.jsp");  
-                 rd.forward(request, response);
-            return;
-            
-                    }
-                     else{
-                        
-                            // Fetch all the user 
+               // Fetch all the user 
                             AdminBean admin = new AdminBean();
                             ArrayList<BookBean> books = new ArrayList<BookBean>();
                             books = admin.getAllBooks();
                             session.setAttribute("admin_all_books",books);
-                            String delete_book = request.getAttribute("delete_book");
-                            if (delete_book != null)
+                            String delete_book = request.getParameter("delete_book");
+                            if (user == null){
+                                response.sendRedirect("View/login.jsp");
+                            }
+                            else {
+                            if (delete_book == null) {
+
+                               rd = request.getRequestDispatcher("View/inventory_admin.jsp");
+                                rd.forward(request, response); 
+                                return;
+                            }
+                            else 
                             {
-                                    String book_id = request.getParameter("user_id");
+                                    String book_id = request.getParameter("book_id");
                                     // Delete the user (Call it)
                                     admin.deleteBookByBookId(book_id);
+                                    System.out.print(book_id);
+                                    response.sendRedirect("AdminManageInventorysController");
+                                    return;
                             }
-                            
-                     }
+                       
+                            }
                 
                     }
-        else {
-               rd=request.getRequestDispatcher("View/inventory_user.jsp");  
-                 rd.forward(request, response);
-            return;
-            
-        }
-        */
-    }
+                    
+      
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

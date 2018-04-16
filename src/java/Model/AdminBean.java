@@ -61,7 +61,10 @@ public class AdminBean implements Serializable {
                 // 2. Create a statement
             Statement stmt = conn.createStatement();            
                 // 3. Execute the SQL query
-            stmt.executeUpdate("DELETE FROM USER SELECT WHERE user_id = '" +user_id+"'");            
+                
+            stmt.executeUpdate("DELETE FROM BOOK WHERE seller_id = '" +user_id+"'");            
+            stmt.executeUpdate("DELETE FROM CART WHERE user_id = '" +user_id+"'");            
+            stmt.executeUpdate("DELETE FROM USER WHERE user_id = '" +user_id+"'");            
                 // 4. Process the result set
             
            }
@@ -77,7 +80,7 @@ public class AdminBean implements Serializable {
                 // 2. Create a statement
             Statement stmt = conn.createStatement();            
                 // 3. Execute the SQL query
-            ResultSet res = stmt.executeQuery("SELECT * FROM USER WHERE typeofuser = 2");            
+            ResultSet res = stmt.executeQuery("SELECT * FROM USER WHERE typeofuser != 2");            
                 // 4. Process the result set
                 while(res.next()){
                 int userid2 = res.getInt("user_id");
@@ -91,4 +94,78 @@ public class AdminBean implements Serializable {
           catch (Exception e){ System.err.println(e); }
         return users;
     }
+
+    public ArrayList<BookBean> getAllBooks() {
+ArrayList<BookBean> books = new ArrayList<BookBean>();
+        try {
+                // 1. Get a connection to database
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/Project2", "root", "root");           
+                // 2. Create a statement
+            Statement stmt = conn.createStatement();            
+                // 3. Execute the SQL query
+            ResultSet res = stmt.executeQuery("SELECT * FROM BOOK");            
+                // 4. Process the result set
+                while(res.next()){
+                int book1 = res.getInt("book_id");
+                String title1 = res.getString("title");
+                String author1 = res.getString("author");
+                double price1 = res.getDouble("price");
+                String des1 = res.getString("description");
+                int quantity1 = res.getInt("quantity");
+                int seller1 = res.getInt("seller_id");
+                
+                BookBean allbooks = new BookBean(book1, title1, author1, price1, des1, quantity1, seller1);
+                books.add(allbooks);
+                }
+           }
+          catch (Exception e){ System.err.println(e); }
+        return books;
+    }    
+
+    public void deleteBookByBookId(String book_id) {
+            try {
+                // 1. Get a connection to database
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/Project2", "root", "root");           
+                // 2. Create a statement
+            Statement stmt = conn.createStatement();            
+                // 3. Execute the SQL query
+            stmt.executeUpdate("DELETE FROM CART WHERE book_id = '" +book_id+"'");            
+
+            stmt.executeUpdate("DELETE FROM BOOK WHERE book_id = '" +book_id+"'");            
+                // 4. Process the result set
+
+           }
+          catch (Exception e){ System.err.println(e); }
+
+
+    }
+    
+     public void updateUserType(int usertype, int userid){
+        
+        try {
+                // 1. Get a connection to database
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/Project2", "root", "root");           
+                // 2. Create a statement
+            Statement stmt = conn.createStatement();            
+                // 3. Execute the SQL query
+                
+            stmt.executeUpdate("UPDATE USER SET typeofuser ='" + usertype +"' WHERE user_id = '" + userid + "'");            
+               
+                // 4. Process the result set
+            
+           }
+          catch (Exception e){ System.err.println(e); }
+    }
+    
+    
+    
+    
+    public static void main(String[] args){
+    AdminBean trans = new AdminBean() ; 
+             trans.deleteBookByBookId("5");
+    }
+            
 }

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.RequestDispatcher;  
 import Model.*;
+import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 
 
@@ -38,7 +39,13 @@ public class LogInController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */     
+            /* TODO output your page here. You may use following sample code. */   
+            
+            
+            
+            
+            
+            
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             RequestDispatcher rd = null;
@@ -61,17 +68,29 @@ public class LogInController extends HttpServlet {
                 // Save the session 
                 //ad
                 user.fetchUserInfo () ;
-                HttpSession session = request.getSession();
+                   int user_id = user.getUser_id();
+            
+            CartBean cart = new CartBean();
+            
+            ArrayList<BookBean>  booksCart = new ArrayList<BookBean>();
+            booksCart = cart.fetchAllCartBooksByUserId(user_id);
+                        HttpSession session = request.getSession();
+
+                 session.setAttribute("cart_info", booksCart);
+            
                 session.setAttribute("user_info", user);     
                 // Navigate to different view 
                  if (user.getUserType() == 2) // It means the user is logged in is the normal user
                  {
-                 rd=request.getRequestDispatcher("AdminController");  
+                 rd=request.getRequestDispatcher("AdminManageInventorysController");  
                  }
-                 else {
+                 else if (user.getUserType() == 0) {
+                     // This is the normal user
                    rd=request.getRequestDispatcher("InventoryController");  
                  }
-               
+                 else {
+                      rd=request.getRequestDispatcher("ManageStoreController");  
+                 }
                  rd.forward(request, response);
             }
             else {

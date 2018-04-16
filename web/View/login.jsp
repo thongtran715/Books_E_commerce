@@ -33,8 +33,8 @@
                 <br/>
                 <br/>
                     <div class="container">
-                       <form action ="./LoginController.java" method="get">
-                        Enter Username:<input type="text" name="username"> <br/>
+                       <form action ="../LogInController" method="post">
+                        Enter Email<input type="text" name="email"> <br/>
                         Enter Password:  <input type="text" name="password"> <br/>
                         <input type="submit" value="Login">
                        </form>

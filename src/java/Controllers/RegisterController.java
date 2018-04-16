@@ -72,8 +72,7 @@ public class RegisterController extends HttpServlet {
             if (password_first.equals(password_second)) {
                  reg.createUserWith (email, password_first, name);
                  // Navigate to login views
-                 rd=request.getRequestDispatcher("View/login.jsp");  
-                 rd.forward(request, response);
+                 response.sendRedirect("View/login.jsp");
                  return;
             }
             else {

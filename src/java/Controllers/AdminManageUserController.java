@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Model.*;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpSession;
 /**
  *
  * @author ThongTran
@@ -23,14 +26,12 @@ public class AdminManageUserController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-      
-                /*
-                    RequestDispatcher rd = null;
-                    Uncomment this section when model and views are ready 
+       RequestDispatcher rd = null;
+                    //Uncomment this section when model and views are ready 
                     HttpSession session = request.getSession();
                     UserBean user = (UserBean)session.getAttribute("user_info");
                     if (user != null) {
-                    if (user.getUserType().equal("2") == false)
+                    if (user.getUserType() != 2)
                     {   
                             response.sendRedirect("View/inventory_user.jsp");
                             return;
@@ -42,31 +43,43 @@ public class AdminManageUserController extends HttpServlet {
                             ArrayList<UserBean> users = new ArrayList<UserBean>();
                             users = admin.getAllUser();
                             session.setAttribute("admin_all_users",users);
-                            String delete_user = request.getAttribute("delete_user");
-                            if (delete_user != null)
+                            
+                            
+                            String delete_user = request.getParameter("delete_user");
+                            String modify = request.getParameter("modify");
+                            if (modify == null){
+                                rd = request.getRequestDispatcher("View/manageUserAdmin.jsp");
+                                 rd.forward(request, response);
+                            }
+                            else {
+                            if (modify.equals("delete_user"))
                             {
                                     String user_id = request.getParameter("user_id");
                                     // Delete the user (Call it)
                                     // First Check to make sure that user is not admin
-                                    if (admin.checkIfUserAdmin(user_id))
-                                {
-                                        // If they are admin, we can't delete that
-                                        String message = "You can't delete other admin";
-                                        session.setAttribute("error_message", message); 
-                                        rd = request.getRequestDispatcher("View/delete_error.jsp");
-                                        rd.forward(request, response);
-                                        return;
-                                }
-                            else {
-                                admin.deleteUserById(user_id);
-                                
+                               
+                                     admin.deleteUserById(user_id);
                             }
+                            else if (modify.equals("change_store_manager")) {
+                                    int user_id = Integer.parseInt(request.getParameter("user_id"));
+                                    admin.updateUserType(1, user_id);
+                            }
+                            else if (modify.equals("change_admin")){
+                                int user_id = Integer.parseInt(request.getParameter("user_id"));
+                                    admin.updateUserType(2, user_id);
+                            }
+                            else if (modify.equals("change_user")){
+                                  int user_id = Integer.parseInt(request.getParameter("user_id"));
+                                    admin.updateUserType(0, user_id);
+                            }
+                          response.sendRedirect("AdminManageUserController");
+
                             }
                             
                      }
                 
                     }
-        */
+        
         
         
     }

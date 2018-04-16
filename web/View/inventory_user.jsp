@@ -1,4 +1,5 @@
-
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.BookBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -16,17 +17,18 @@
 
                     <div class="headerWidget">
                
-                    <a href="./cart.jsp">Cart</a>
+                    <a href="./CartController">Cart</a>
                     </div>
 
-                    <div class="headerWidget">
-                       <a href="./login.jsp">Login</a>
+                
+                     <div class="headerWidget">
+                         <a href="./HistoryController">Your History</a>
                     </div>
-
-                    <div class="headerWidget">
-                         <a href="./checkout.jsp">Checkout</a>
+                    
+                     <div class="headerWidget">
+                         <a href="./LogoutController">Log Out</a>
                     </div>
-
+                    
                 </div>
 
                 <a href="#">
@@ -36,95 +38,40 @@
                 <img src="#" id="logoText" alt="The Bookstore">
             </div>
 
+                <%
+                    ArrayList<BookBean> books = (ArrayList)session.getAttribute("Books_Info");
+                   
+                    out.println("<table border='1'>");
+                         out.print("<th> Title </th>");
+                                                out.print("<th> Author </th>");
+                                                                        out.print("<th> Price </th>");
+         out.print("<th> Quantity </th>"); 
+                    for (int i = 0 ; i < books.size() ; ++i){
+                        out.println("<tr>");
+                      
 
+                        out.println("</tr>");
+                        
+                        out.println("<tr>");
+                        out.print("<td> " + books.get(i).getTitle() + "</td>");
+                        
+                        out.print("<td> " + books.get(i).getAuthor() + "</td>");
+                        out.print("<td> " + books.get(i).getPrice()+ "</td>");
+                        out.print("<td> " + books.get(i).getQuantity()+ "</td>");
 
-            <div id="singleColumn">
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                <p id="categoryTitle">[ selected category ]</p>
+                        out.print("<td>  <form action='InventoryController' method='post'> <input type='hidden' value='" +books.get(i).getBook_id() + "' name='book_id' ><input type='submit' name= 'add_to_cart' value='Add To cart'> </form>  </td>");
+                        
+                        out.println("</tr>");
+                    }
 
-                <table id="productTable">
-                    <tr>
-                        <td class="lightBlue">
-                            <img src="#" alt="product image">
-                        </td>
-                        <td class="lightBlue">
-                            [ product name ]
-                            <br>
-                            <span class="smallText">[ product description ]</span>
-                        </td>
-                        <td class="lightBlue">[ price ]</td>
-                        <td class="lightBlue">
-                            <form action="#" method="post">
-                                <input type="submit" value="purchase button">
-                            </form>
-                        </td>
-                    </tr>
+                    out.println("</table>");
+                    %>
+                
+       
+            
+            
+            
 
-                    <tr>
-                        <td class="white">
-                            <img src="#" alt="product image">
-                        </td>
-                        <td class="white">
-                            [ product name ]
-                            <br>
-                            <span class="smallText">[ product description ]</span>
-                        </td>
-                        <td class="white">[ price ]</td>
-                        <td class="white">
-                            <form action="#" method="post">
-                                <input type="submit" value="purchase button">
-                            </form>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="lightBlue">
-                            <img src="#" alt="product image">
-                        </td>
-                        <td class="lightBlue">
-                            [ product name ]
-                            <br>
-                            <span class="smallText">[ product description ]</span>
-                        </td>
-                        <td class="lightBlue">[ price ]</td>
-                        <td class="lightBlue">
-                            <form action="#" method="post">
-                                <input type="submit" value="purchase button">
-                            </form>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="white">
-                            <img src="#" alt="product image">
-                        </td>
-                        <td class="white">
-                            [ product name ]
-                            <br>
-                            <span class="smallText">[ product description ]</span>
-                        </td>
-                        <td class="white">[ price ]</td>
-                        <td class="white">
-                            <form action="#" method="post">
-                                <input type="submit" value="purchase button">
-                            </form>
-                        </td>
-                    </tr>
-                </table>
-            </div>
 
             <div id="footer">
                 <hr>

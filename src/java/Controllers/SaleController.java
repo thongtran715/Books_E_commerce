@@ -40,26 +40,22 @@ public class SaleController extends HttpServlet {
             RequestDispatcher rd = null;
             HttpSession session = request.getSession();
             UserBean user = (UserBean)session.getAttribute("user_info");
-            int store_manager_id = user.getUserId();
+            int store_manager_id = user.getUser_id();
             TransactionBean transactions = new TransactionBean();
             
             //Uncomment this section to load the SaleBean
             ArrayList<TransactionBean> sales = new ArrayList<TransactionBean>();
             sales = transactions.findAllSaleFromUserId(store_manager_id);
             session.setAttribute("sales_info", sales);
-            
-            if (user == null){
-                response.sendRedirect("View/inventory_user.jsp");
+            if (user.getUserType() != 1) {
+                response.sendRedirect("InventoryController");
+                return;
             }
             else {
-            if (sales.size() == 0){
-                rd = request.getRequestDispatcher("View/empty_sale.jsp");
-                rd.forward(request, response);
-            }
-            else {
+                
                  rd = request.getRequestDispatcher("View/sale.jsp");
                  rd.forward(request, response);
-                 }
+                 
             }
         }
         
